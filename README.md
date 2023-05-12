@@ -1,13 +1,13 @@
 ______________
 
-# Long Compasity
+# Peak Flow
 
 Version: 1.0 | Platform: Linux Or Windows | Authors: Larissa Voshol, Marian Hasan & Daniël Pastoor
 ________________
 
 ## Description
 
-In this assignment have we been given the task to create an analystic paper about the long compasity of man and woman that do a sport and not.
+In this assignment have we been given the task to create an analystic paper about the peak flow of man and woman that do a sport and not.
 
 ## Requirements
 
