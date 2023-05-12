@@ -2,7 +2,7 @@ ______________
 
 # Peak Flow
 
-Version: 1.0 | Platform: Linux Or Windows | Authors: Larissa Voshol, Marian Hasan & Daniël Pastoor
+Version: 1.0 | Platform: Linux Or Windows | Authors: Larissa Voshol, Marian Hasansoep & Daniël Pastoor
 ________________
 
 ## Description
