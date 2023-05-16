@@ -30,7 +30,7 @@ TBD
 In case of difficulties contact:
 Daniël Pastoor: d.h.s.pastoor@st.hanze.nl
 Marian Hasan: m.hasan@st.hanze.nl
-Larissa Soshol: l.voshol@st.hanze.nl
+Larissa Voshol: l.voshol@st.hanze.nl
 
 ### FAQ 
 Here you will find the most common problems provided with the answers
