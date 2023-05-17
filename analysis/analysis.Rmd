@@ -1,0 +1,321 @@
+---
+title: "Peak Flow"
+authors: "<Daniël: 452871, Larissa: 432995 en Marian:446030 >"
+date: "`r Sys.Date()`"
+knit: (function(inputFile, encoding) {
+      out_dir <- "../publication";
+      rmarkdown::render(inputFile,
+                        encoding=encoding,
+                        output_dir=file.path(dirname(inputFile), out_dir))})
+output:
+  html_document:
+    css: style.css
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+---
+
+```{r setup, include=FALSE}
+# DON'T TOUCH THIS
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+
+```
+
+
+## Inleiding
+Er wordt onderzocht naar een verhouding tussen hand lengte en hand breedte bij mannen en vrouwen. En eventueel andere relaties, door middel van het opmeten van de dominante hand bij verschillende mensen.
+
+:::info
+Het staat je vrij een ander simpel te meten biometrisch kenmerk te onderzoeken. Voorwaarde is wel dat je twee aspecten meet (bv lichaamslengte en hoofdomtrek) en hun relatie onderzoekt, en ook dat je verschillende groepen onderzoekt (man/vrouw, jong/oud etc.). Ten slotte moeten verschillende studenten het meetwerk afwisselen en ook dat moet vastgelegd worden.
+:::
+
+
+## Onderzoeksvraag
+Is there a relation between the frequency and type of exercise on the peak flow before and after physical activity in male and female students between the ages of 18 and 25? 
+:::
+
+
+## 0-Hypothese
+Er zit geen verschil in ratio van handbreedte en handlengte tussen mannen en vrouwen,
+
+
+
+## Hypothese
+Mannen hebben een hogere ratio in handbreedte en handlengte dan vrouwen.
+
+
+
+### Ontwerp van het experiment
+
+Meten van de hand bij 20 mannen en vrouwen van verschillende leeftijden met verschillende soorten lichaamsbouw. Om diversiteit zo groot mogelijk te houden.
+
+### protocol
+
+:::protocol
+#### Protocol for measurement
+
+##### Target audience: 
+
+18 to 25 year olds 
+
+Non smokers/vapers 
+
+No lung conditions 
+
+Sports: football, volleyball, gym, athletics 
+
+
+##### Research group: 
+
+Men 
+
+Sports/ works out less than 1 time a week 
+
+Sports/ works out more than 1 time a week 
+
+ 
+
+Women 
+
+Sports/ works out less than 1 time a week 
+
+Sports/ works out more than 1 time a week 
+
+ 
+
+##### Supplies: 
+
+Spirometer 
+
+##### Data procession: 
+
+The data will be processed using an excel sheet in which the following columns will be used: 
+
+ 
+
+Subject_id 		number 
+
+Labarant_id 		number 
+
+Sport			(football, volleyball, athletics, tennis, none) 
+
+Sport_frequency 
+
+Age  
+
+Length			in cms 
+
+Weight 			in kilograms 
+
+Sex			man or woman 
+
+Long_capacity 	in liters 
+
+ 
+
+This file will be saved in a Github environment to make it accessible for all group members. The data will be anonymized  
+
+ 
+
+ 
+
+##### Steps: 
+
+1. Explain our experiment and determine whether the subject fits the criteria. 
+
+2. One person will ask for their basic information and write it down in the right column like: 
+
+2.1 Age 
+
+2.2 Length 
+
+2.3 Weight 
+
+2.4 Sex 
+
+2.5 Sport 
+
+2.6 Sport times 
+ 
+
+3. Measure the peak flow before an active workout.   
+How to measure with a spirometer: 
+
+3.1 The subject must inhale and exhale deeply 3 times. 
+
+3.2 After the 3rd inhale, the subject must place the spirometer inside their mouth and exhale until there is no air left in their lungs. 
+
+3.3 Both researchers will write down the number in the "Peak flow" column in their own excel file. 
+ 
+3.4 Rest 1 minute. 
+
+3.5 The subjects must now do 10 jumping jacks. 
+
+3.6 Repeat steps 4.1 – 4.3. 
+
+## Analyse
+
+### Lees je eigen data in
+
+Om data vanuit een tekstbestand in te lezen kan je dit codeblok gebruiken, aannemend dat je data er exact zo uitzien als in bovenstaande voorbeeld:
+
+```{r demo-data-inlees, eval=FALSE}
+data_file <- "raw_data/data.csv"
+
+#data format: laborant_ID,subject_ID,handlengte,handbreedte,sexe
+biometric_data <- read.table(file = data_file,
+                        header = TRUE,
+                        sep = ";")
+```
+
+```{r data-verwerk, eval=FALSE}
+# get mean of the 2 different data points
+biometric_dat <- aggregate(.~id_data ,data=biometric_data[ , c('id_data','lengte', 'breedte')], FUN = mean)
+sekse <- biometric_data[20:60, c('sexse')]
+
+data <- cbind(biometric_dat, sekse)
+
+
+```
+
+### Beschrijvende statistiek
+#### Histogram
+Dit is een histogram van alle verkregen data.
+```{r sampling-demo, fig.asp=.6, out.width='60%', fig.align='center'}
+# histogramm van alle data
+```
+
+#### Boxplot
+Dit is en boxplot van alle verkegen data.
+```{r sampling-demo, fig.asp=.6, out.width='60%', fig.align='center'}
+ggplot(data = data,
+       mapping = aes(x = sekse, y = lengte)) +
+      geom_boxplot() +
+      stat_summary(fun = "mean", geom = "point",
+               color = "gold")
+ggplot(data = data,
+       mapping = aes(x = sekse, y = breedte)) +
+      geom_boxplot() +
+      stat_summary(fun = "mean", geom = "point",
+               color = "gold")
+
+```
+Hier kan er gezien worden dat de gemiddelde hand lengte en hand breedte hoger liggen bij de man dan bij de vrouw. Ook kan er gezien worden dat de gemiddelde handbreedte hoger ligt in het bereik dan bij alle overige data.
+
+#### Ratio bij hand lengte en hand breedte
+Als je de hand lengte deelt door de hand breedte krijg je een ratio. Dit vertelt je hoeveel langer je hand is in vergelijking met je hand breedte. 
+
+Hieronder is een histogram van de ratios.
+```{r sampling-demo, fig.asp=.6, out.width='60%', fig.align='center'}
+#histogram ratios of both males and females:
+ggplot(data = data) +
+       geom_histogram(mapping = aes(x = ratio,  fill=sekse, col=sekse, group=sekse), bins = 30, alpha = 0.05, position="dodge", right=TRUE) +
+  scale_x_continuous(breaks = seq(min(data$ratio), 
+                                  max(data$ratio), by = 0.3))
+
+
+
+
+#determine ratio 
+data$ratio <- data$lengte/data$breedte
+#Shapior Wilk test on ratios
+sw_test <- shapiro.test(data$ratio)
+print(sw_test)
+# Mann-Whitney test on ratios of males and females
+result <- wilcox.test(ratio~sekse, data=data)
+print(result)
+#standard deviation of ratios of males and females
+sd_ratios <- sd(data$ratio)
+print('This is the standard deviation of the ratios:')
+print(sd_ratios)
+```
+
+LAAT ENKELE BESCHRIJVENDE STATISTISCHE WAARDES ZIEN.
+GEEF EEN OF MEERDERE BOXPLOTS EN HISTOGRAMMEN
+BESPREEK DEZE DATA EN FIGUREN KORT.
+KAN JE IETS ZEGGEN OVER DE DATAVERDELING?
+
+### Welke verdeling?
+
+Hoe kleiner de steekproefgrootte (_sample size_) hoe lastiger het is de onderliggende verdeling vast te stellen. Speel maar eens met dit blokje code, en verander de steekproefgrootte (`n=`) in de `rnorm()` functie en de `breaks=` in de `hist()` functie. 
+Neem voor _n_ bijvoorbeeld achtereenvolgens 10, 100, 1000, 10000, 10000 en voor _breaks_ 5, 10, 50. Wanneer zie je een echte normaalverdeling verschijnen? 
+
+
+```{r sampling-demo, fig.asp=.6, out.width='60%', fig.align='center'}
+hist_data <- data.frame(x = rnorm(n = 10000))
+ggplot(data = hist_data,
+       mapping = aes(x = x)) +
+    geom_histogram(bins = 10, fill = "gold", colour = "black") +
+    theme_minimal()
+
+```
+
+:::attention
+**Dit _experiment_ met de argumenten van `rnorm()` en `hist()` moet je opnemen in je eigen RMarkdown.**  
+Beantwoord deze vragen:
+
+1. Wat gebeurt er met de vorm van de verdeling als `n` groter wordt?
+
+De grafiek wordt steeds hoger en stijler in toppen van de verschillende balken.
+
+2. Wat gebeurt er met de spreiding van de data (x-as) als `n` groter wordt, en kan je dat verklaren?
+
+Je hebt meer data punten en hierdoor wordt de data die je hebt verkregen accurater. De stapjes tussen de verschillende punten worden namelijk kleiner. En komt er een steeds een kleiner percentage van alle data in de eerste en laatste 17%.
+
+3. Waarom is bij zelfde instellingen voor `n` en `breaks` de uitkomst toch verschillend?
+
+Het aantal `breaks` en de waarde van `n` zijn twee verschillende dingen in ggplot2 R. Het aantal breaks bepaalt het aantal intervallen waarin de x-as of y-as wordt verdeeld en de waarde van n bepaalt het aantal labels op de x-as of y-as
+
+4. Welke minimale `n` geeft het meeste kans om een echte normaalverdeling te zien?
+
+Bij de 10000 zie je echt een normaalverdeling verschijnen, dit kan je herkennen dat er 2,5% van de grafiek op de eerste en laatst 1/6 deel van de grafiek zit.
+
+5. Wat voor bijzonders is er aan de hand met het `breaks` argument? Geeft de documentatie daar een verklaring voor?
+'breaks'argument bepaalt de verdeling van de gegevens op de x- of y-as. In het algemeen word het gebruikt op 2 manieren:
+
+1. Een vector van specifieke waarden waarop de verdeling moet worden gebaseerd.
+2. Een enkel getal dat aangeeft hoeveel verdelingen moeten worden gebruikt.
+
+De breaks is niet echt heel bijzonder behalve dan wat er hier boven benoemd is. Verder kan je uitgebreid in de documentatie lezen wat breaks zijn.
+:::
+
+### Bronnen van variatie
+
+De mogelijke bronnen van variatie in dit experiment zouden kunnen zijn dat dat wij als groepsleden verschillende beginpunten hebben gebruikt bij het meten van de handen. Ook kan het zo zijn dat we de liniaal anders hebben afgelezen. 
+
+### De hypothese aannemen?
+
+Voordat er een conclusie getrokken kon worden over het experiment is er bepaald of de data normaal verdeeld was. Hiervoor is eerst de Shapiro Wilk test uitgevoerd. Uit deze test kwam een w-waarde van 0.93418 en een p-waarde van 0.01992. Hoe dichterbij de w-waarde bij 1 zit, hoe groter de kans is dat de data normaal verdeeld is. In dit geval is er dus een kans dat de data niet normaal verdeeld is. Verder ligt de p-waarde onder de 0.05, wat ook duidt op een niet normaal verdeelde data set. Als er echter naar de histogram wordt gekeken van de ratios blijkt de data toch wel normaal verdeeld te zijn.
+We zijn er voor de zekerheid vanuit gegaan dat de data niet normaal verdeeld is en hebben daarom de Mann Whitney test op de data uitgevoerd. Hieruit kwam een p-waarde van 0.6669. Dit betekent dat er geen significant verschil zit tussen de ratio van de mannen en de ratio van de vrouwen en de nulhypothese dus niet verworpen wordt.
+
+Verder is ook de standaarddeviatie berekent. De standaarddeviatie is 0.1088, wat betekent dat er niet veel verschil tussen de waardes zit. 
+
+
+## Reflectie op het experiment
+
+:::info
+Bespreek in je groep de volgende vragen en voeg de antwoorden toe aan je uitgewerkte onderzoeksdocument.  
+
+1. Zijn de metingen tussen de verschillende meters ook (significant) verschillend? Zo ja, waardoor zou je de verschillen kunnen verklaren?
+
+Er zit verschil tussen de metingen van verschillende meters. Dit kan bijvoorbeeld komen doordat de liniaal anders afgelezen werd door de verschillende meters.
+
+2. Onderzoek de verschillen tussen mannen en vrouwen met betrekking tot hand lengte, handbreedte en de ratio.
+
+Uit de resultaten is gebleken dat mannen zowel bredere als langere handen hebben dan vrouwen. Er zit echter geen significant verschil in ratio van de handbreedte en handlengte tussen mannen en vrouwen.
+
+3. Zou je het protocol aanpassen na deze ervaring, of was hij voldoende duidelijk en reproduceerbaar?
+
+Het protocool zelf was duidelijk en reproduceerbaar, alleen om data te verzamelen dat meer betrouwbaar is kan er om meer informatie van de persoon worden gevraagd. Zoals lengte, leeftijd en gewicht van de persoon, deze factoren kunnen ook effect hebben op de verhoudingen van de hand van een persoon.
+:::
+
+
+:::attention
+#### Wat je moet inleveren
+Voor de verwerking en analyse van je eigen data maak je gebruik van het aangeleverde template RMarkdown document. Daarin doorloop je dezelfde onderzoek stappen als hieronder, maar dan met je eigen data. Aan het einde van de dag gaat dat document, in originele en "geknitte" vorm, samen met je databestand, in een git repo die is opgezet volgens voorschift in de cursushandleiding. De link hiernaar toe gaat in je portfolio op eJournal. Let op dat je _alle_ stappen hebt doorlopen voordat je inlevert. Gebruik ook de RStudio spellingscontrole!  
+Vergeet niet jullie namen en studentnummers bovenaan de markdown te zetten!
+:::
+
