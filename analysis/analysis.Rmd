@@ -160,7 +160,7 @@ Weight 			in kilograms
 
 Sex			man or woman 
 
-Long_capacity 	in liters 
+Peak_flow 	in liters 
 
  
 
@@ -176,7 +176,7 @@ This file will be saved in a Github environment to make it accessible for all gr
 Om data vanuit een tekstbestand in te lezen kan je dit codeblok gebruiken, aannemend dat je data er exact zo uitzien als in bovenstaande voorbeeld:
 
 ```{r demo-data-inlees, eval=FALSE}
-data_file <- "raw_data/data.csv"
+data_file <- "raw_data/Data_breath.csv"
 
 #data format: laborant_ID,subject_ID,handlengte,handbreedte,sexe
 biometric_data <- read.table(file = data_file,
@@ -185,6 +185,7 @@ biometric_data <- read.table(file = data_file,
 ```
 
 ```{r data-verwerk, eval=FALSE}
+# larissa
 # get mean of the 2 different data points
 biometric_dat <- aggregate(.~id_data ,data=biometric_data[ , c('id_data','lengte', 'breedte')], FUN = mean)
 sekse <- biometric_data[20:60, c('sexse')]
@@ -204,6 +205,9 @@ Dit is een histogram van alle verkregen data.
 #### Boxplot
 Dit is en boxplot van alle verkegen data.
 ```{r sampling-demo, fig.asp=.6, out.width='60%', fig.align='center'}
+
+# Marian
+
 ggplot(data = data,
        mapping = aes(x = sekse, y = lengte)) +
       geom_boxplot() +
