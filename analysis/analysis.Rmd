@@ -25,106 +25,55 @@ library(ggplot2)
 ```
 
 
-## Inleiding
-Er wordt onderzocht naar een verhouding tussen hand lengte en hand breedte bij mannen en vrouwen. En eventueel andere relaties, door middel van het opmeten van de dominante hand bij verschillende mensen.
+## Introduction
+The purpose of this experiment was to determine whether or not sports/working out influences the peak flow rate of students. The peak flow rate is the maximum rate of airflow that a person can exhale and is measured in liters per minute.  A healthy peak flow rate lies between 400 and 600 liters per minute. A peak flow rate between 200 and 400 liters per minute can indicate asthma. The peak flow rate is measured using a spirometer. 
 
-:::info
-Het staat je vrij een ander simpel te meten biometrisch kenmerk te onderzoeken. Voorwaarde is wel dat je twee aspecten meet (bv lichaamslengte en hoofdomtrek) en hun relatie onderzoekt, en ook dat je verschillende groepen onderzoekt (man/vrouw, jong/oud etc.). Ten slotte moeten verschillende studenten het meetwerk afwisselen en ook dat moet vastgelegd worden.
-:::
+Previous research has proven that exercising can increase one's peak flow rate. In this experiment an attempt to prove this will be done by measuring the peak flow rates of subjects before and after performing 10 jumping jacks. The subjects will be categorized in subjects that participate in sports/work out and subjects that don’t. 
 
 
-## Onderzoeksvraag
+## Research Question
 Is there a relation between the frequency and type of exercise on the peak flow before and after physical activity in male and female students between the ages of 18 and 25? 
-:::
+Is there a higher peak flow rate in male and female subjects between the ages of 18 and 25 years that exercise in contrary to subjects that don't?
 
 
-## 0-Hypothese
-Er zit geen verschil in ratio van handbreedte en handlengte tussen mannen en vrouwen,
+## 0-Hypothesis
+There is no relation between the frequency and type of exercise on the peak flow before and after physical activity in male and female students between the ages of 18 and 25? 
+
+
+## Hypothesis
+Subjects that excercise or participate in sports have a higher peak flow rate.
 
 
 
-## Hypothese
-Mannen hebben een hogere ratio in handbreedte en handlengte dan vrouwen.
+Mean  before jumping jacks not exercising females -  mean after jumping jacks not exercising females
+
+Mean  before jumping jacks not exercising males -  mean after jumping jacks not exercising males
+
+Mean  before jumping jacks exercising females -  mean after jumping jacks exercising females
+
+Mean  before jumping jacks exercising males -  mean after jumping jacks exercising males
+
+
+Compare not exercising females with exercising females
+
+Compare not exercising males with exercising males
+
+Compare not exercising females with not exercising males
+
+Compare exercising females with exercising males
 
 
 
 ### Ontwerp van het experiment
 
-Meten van de hand bij 20 mannen en vrouwen van verschillende leeftijden met verschillende soorten lichaamsbouw. Om diversiteit zo groot mogelijk te houden.
+Measure the peak flow rate in 20 exercising males, 20 exercising females, 20 not exercising males and 20 not exercising females before and after performing 10 jumping jacks. 
+
 
 ### protocol
 
 :::protocol
 #### Protocol for measurement
-
-##### Target audience: 
-
-18 to 25 year olds 
-
-Non smokers/vapers 
-
-No lung conditions 
-
-Sports: football, volleyball, gym, athletics 
-
-
-##### Research group: 
-
-Men 
-
-Sports/ works out less than 1 time a week 
-
-Sports/ works out more than 1 time a week 
-
- 
-
-Women 
-
-Sports/ works out less than 1 time a week 
-
-Sports/ works out more than 1 time a week 
-
- 
-
-##### Supplies: 
-
-Spirometer 
-
-##### Data procession: 
-
-The data will be processed using an excel sheet in which the following columns will be used: 
-
- 
-
-Subject_id 		number 
-
-Labarant_id 		number 
-
-Sport			(football, volleyball, athletics, tennis, none) 
-
-Sport_frequency 
-
-Age  
-
-Length			in cms 
-
-Weight 			in kilograms 
-
-Sex			man or woman 
-
-Long_capacity 	in liters 
-
- 
-
-This file will be saved in a Github environment to make it accessible for all group members. The data will be anonymized  
-
- 
-
- 
-
-##### Steps: 
-
-1. Explain our experiment and determine whether the subject fits the criteria. 
+1. Explain our experiment and determine if the fits the criteria. 
 
 2. One person will ask for their basic information and write it down in the right column like: 
 
@@ -155,6 +104,70 @@ How to measure with a spirometer:
 3.5 The subjects must now do 10 jumping jacks. 
 
 3.6 Repeat steps 4.1 – 4.3. 
+
+##### Target audience: 
+
+18 to 25 year olds 
+
+Non smokers/vapers 
+
+No lung conditions 
+
+Sports: football, volleyball, gym, athletics 
+
+
+##### Research group: 
+
+Males 
+
+Sports/ works out less than 1 time a week 
+
+Sports/ works out more than 1 time a week 
+
+ 
+
+Females
+
+Sports/ works out less than 1 time a week 
+
+Sports/ works out more than 1 time a week 
+
+ 
+
+##### Supplies: 
+
+Spirometer 
+
+##### Data processing: 
+
+The data will be processed using an excel sheet in which the following columns will be used: 
+
+ 
+
+Subject_id 		number 
+
+Labarant_id 		number 
+
+Sport			(football, volleyball, athletics, tennis, none) 
+
+Sport_frequency 
+
+Age  
+
+Length			in cms 
+
+Weight 			in kilograms 
+
+Sex			man or woman 
+
+Long_capacity 	in liters 
+
+ 
+
+This file will be saved in a Github environment to make it accessible for all group members. The data will be anonymized  
+
+ 
+
 
 ## Analyse
 
