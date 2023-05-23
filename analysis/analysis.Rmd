@@ -175,13 +175,13 @@ This file will be saved in a Github environment to make it accessible for all gr
 
 Om data vanuit een tekstbestand in te lezen kan je dit codeblok gebruiken, aannemend dat je data er exact zo uitzien als in bovenstaande voorbeeld:
 
-```{r demo-data-inlees, eval=FALSE}
-data_file <- "raw_data/Data_breath.csv"
+```{r data-inlezen, eval=FALSE}
+data_file <- "../raw_data/Data_breath.csv"
 
-#data format: laborant_ID,subject_ID,handlengte,handbreedte,sexe
-biometric_data <- read.table(file = data_file,
+#data format: Subject_id,Sport,Sport_times,Age,Length,Weight,Sex,Peak_flow,Has_activity,Device_number
+data_breath <- read.table(file = data_file,
                         header = TRUE,
-                        sep = ";")
+                        sep = ",")
 ```
 
 ```{r data-verwerk, eval=FALSE}
