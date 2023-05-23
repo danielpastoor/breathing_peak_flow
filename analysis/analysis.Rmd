@@ -21,6 +21,7 @@ output:
 # DON'T TOUCH THIS
 knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2)
+library(dplyr)
 
 ```
 
@@ -175,7 +176,7 @@ This file will be saved in a Github environment to make it accessible for all gr
 
 Om data vanuit een tekstbestand in te lezen kan je dit codeblok gebruiken, aannemend dat je data er exact zo uitzien als in bovenstaande voorbeeld:
 
-```{r data-inlezen, eval=FALSE}
+```{r data-reading, eval=FALSE}
 data_file <- "../raw_data/Data_breath.csv"
 
 #data format: Subject_id,Sport,Sport_times,Age,Length,Weight,Sex,Peak_flow,Has_activity,Device_number
@@ -185,13 +186,11 @@ data_breath <- read.table(file = data_file,
 ```
 
 ```{r data-verwerk, eval=FALSE}
-# larissa
 # get mean of the 2 different data points
-biometric_dat <- aggregate(.~id_data ,data=biometric_data[ , c('id_data','lengte', 'breedte')], FUN = mean)
-sekse <- biometric_data[20:60, c('sexse')]
+data_breath_diff <- data_breath %>% group_by(Subject_id) %>% mutate(Diff_peak_flow = Peak_flow[2] - Peak_flow[1])
 
-data <- cbind(biometric_dat, sekse)
-
+data_breath <-  data_breath %>%
+  mutate( Sporting = case_when(Sport == "None" ~ F, .default = T))
 
 ```
 
@@ -199,6 +198,13 @@ data <- cbind(biometric_dat, sekse)
 #### Histogram
 Dit is een histogram van alle verkregen data.
 ```{r sampling-demo, fig.asp=.6, out.width='60%', fig.align='center'}
+
+# daniel
+# mensen die sporten en eeeeeen die niet sporten
+# sex met kleur
+
+# nog 2 met voor en na jumbo jacks
+
 # histogramm van alle data
 ```
 
