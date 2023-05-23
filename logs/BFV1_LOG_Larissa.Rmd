@@ -53,7 +53,7 @@ Data gemeten met spirometer.
 
 Data is geopend.
 
-```{r}
+```{r openen van data}
 
 data_file <- "raw_data/Data_breath.csv"
 data <- read.table(file = data_file,
@@ -65,7 +65,7 @@ data
 De data is prima, dataframe is zoals verwacht is.
 Deze data ververvolgens op verschillende manieren geplot.
 
-```{r}
+```{r plotten van sport tegen peak_flow}
 library(ggplot2)
 ggplot(data = data, aes(x = Sport , y = Peak_flow, colour = Sex)) + 
   geom_point()
@@ -75,15 +75,21 @@ ggplot(data = data, aes(x = Sport , y = Peak_flow, colour = Sex)) +
 ##22-5-2023
 Vervolg op het plotten van de data. Het verschil tussen peakflow voor en na 10 jumpingjacks.
 
-```{r}
+```{r verschil tussen peakflow voor en na 10 jumpingjacks}
 
 data <- data %>% group_by(Subject_id) %>% mutate(Diff_peak_flow = Peak_flow[2] - Peak_flow[1])
 
-data %>%
-  select(Sport) %>%
-  mutate( sporting = case_when(Sport == c("Altheletiek", "Korfbal", "Sportschool", "Voetbal", "Volleybal", "Zwemmen") ~ "Yes", .default = "No"))
 
 ggplot(data = data,
-       mapping = aes(x = ))
+       mapping = aes(x = Subject_id, y = Diff_peak_flow, colour = Sex)) +
+  geom_point()+
+  geom_smooth(se = F)
 
 ```
+
+##23-5-2023
+Vervolg op plotten van data.
+```{r}
+
+```
+
