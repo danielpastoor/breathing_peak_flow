@@ -87,9 +87,23 @@ ggplot(data = data,
 
 ```
 
+<<<<<<< Updated upstream
 ##23-5-2023
 Vervolg op plotten van data.
 ```{r}
+=======
+##24-5-2023
+Vervolg op plotten van data.
+```{r maken van anova}
+Data_breath %>% mutate(Peak_flow_after <- filter(Has_activity == "F")) 
+
+Data_breath %>% filter(Sex == "Man") %>% 
+  filter(Sport == "Geen")
+two.way <- aov(yield ~ peak_flow + data = Data_breath )
+
+Data_breath %>% filter(Sex == "Vrouw")
+Data_breath
+>>>>>>> Stashed changes
 
 ```
 
