@@ -55,7 +55,7 @@ Data is geopend.
 
 ```{r openen van data}
 
-data_file <- "raw_data/Data_breath.csv"
+data_file <- "../raw_data/Data_breath.csv"
 data <- read.table(file = data_file,
                           header = TRUE,
                           sep = ",")
