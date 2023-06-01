@@ -9,28 +9,31 @@ output:
 
 
 # Preliminaries
-Dit onderzoek is in de periode van eind april tot eind juni 2023 uitgevoerd. Voornamlijke op het Zernike campus in Groningen. Met een uitzondering van de korfbal vereniging, D'ommerdieck in Nieuwleusen.
+Dit onderzoek is in de periode van eind april tot eind juni 2023 uitgevoerd. Voornamlijke op het Zernike Campus in Groningen. Met een uitzondering van de korfbal vereniging, D'ommerdieck in Nieuwleusen.
 
 # Introduction
 
 ## Goal
-Is er een verband tu
+Is er een effect van sporten en niet sporten op de maximale uitademing bij studenten voor en na 10 jumping jacks.
 
 ## Data collection
+Data was verzameld op Zenike Campus en korfbal vereniging, D'ommerdieck. De persoon werd gevraagd om zo hard en snel mogelijk in een peakflow meter te blazen. Vervolgens 10 jumping jacks te doen en hierna weer in de peakflow meter te blazen.
 
 ## Theory
+De maximale uitademing, is een moment opnamen waarbij de persoon zo hard mogelijk heeft uitgeademend. Dit wordt gemeten in liters/minuut.
 
 
 # Experimental work
 ## 17-4-2023
 Uitzoeken van onderwerp, uitvoeren van vooronderzoek.
 
-##3-5-2023
+## 3-5-2023
 maken van protocol versie 1, zie .... protocol.
 
-##10-5-2023
+## 10-5-2023
 voorbereiding voor het meten, uitwerken van eerste versie van protocol.
 Uittesten van spirometer op elkaar.
+### Code
 ```{r testdata}
 subject <- c("Marian", "Daniel", "Larissa", "Marian", "Daniel", "Larissa")
 peakflow <- c(220, 450, 360, 240, 470, 360)
@@ -41,18 +44,18 @@ uittest_data <- data.frame(subjects, peakflow, which_method)
 ```
 Tijdens is gebleken dat we een aantal stappen konden verwijderen uit het oude protocol. Omdat we destijds nog niet het model van de spirometer wisten en we dit heel algemeen moesten houden.
 
-##11-5-2023
+## 11-5-2023
 Data gemeten met spirometer.
 
-##13-5-2023
+## 13-5-2023
 Data gemeten met spirometer.
 
-##15-05-2023
+## 15-05-2023
 
 ### Openen van data
 
 Data is geopend.
-
+### Code
 ```{r openen van data}
 
 data_file <- "../raw_data/Data_breath.csv"
@@ -64,7 +67,7 @@ data
 ```
 De data is prima, dataframe is zoals verwacht is.
 Deze data ververvolgens op verschillende manieren geplot.
-
+### Code
 ```{r plotten van sport tegen peak_flow}
 library(ggplot2)
 ggplot(data = data, aes(x = Sport , y = Peak_flow, colour = Sex)) + 
@@ -74,7 +77,7 @@ ggplot(data = data, aes(x = Sport , y = Peak_flow, colour = Sex)) +
 
 ##22-5-2023
 Vervolg op het plotten van de data. Het verschil tussen peakflow voor en na 10 jumpingjacks.
-
+### Code
 ```{r verschil tussen peakflow voor en na 10 jumpingjacks}
 
 data <- data %>% group_by(Subject_id) %>% mutate(Diff_peak_flow = Peak_flow[2] - Peak_flow[1])
@@ -87,15 +90,13 @@ ggplot(data = data,
 
 ```
 
-<<<<<<< Updated upstream
-##23-5-2023
-Vervolg op plotten van data.
-```{r}
-=======
 ##24-5-2023
 Vervolg op plotten van data.
+### Code
 ```{r maken van anova}
-Data_breath %>% mutate(Peak_flow_after <- filter(Has_activity == "F")) 
+library(dplyr)
+data
+data %>% select(Has_activity == "F") 
 
 Data_breath %>% filter(Sex == "Man") %>% 
   filter(Sport == "Geen")
@@ -103,7 +104,9 @@ two.way <- aov(yield ~ peak_flow + data = Data_breath )
 
 Data_breath %>% filter(Sex == "Vrouw")
 Data_breath
->>>>>>> Stashed changes
 
 ```
+## 30-5-2023
+### Code
+
 
