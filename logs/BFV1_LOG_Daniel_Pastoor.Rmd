@@ -30,6 +30,25 @@ Background information from literature!!
 
 # Experimental work
 
+## April 17, 2023
+
+## May 3, 2023  
+
+## May 10, 2023
+
+## May 11, 2023
+
+1. Been busy today testing Peak flow meter. To see if it still needed to be calibrated.
+2. after testing we were able to get some data from our class 
+3. Furthermore I went with my group towards willemdewijk school to find test persons.
+4. Also after that we went to ACLO to research more people there"
+
+## May 12, 2023
+
+1. Been busy today adjusting long capasity to flow peak.
+2. Further, today I created and set up the Git Repository with the proper directory structure
+3. In the process also created and completed the readme
+
 ## May 15, 2023
 
 ### Data reading
@@ -72,7 +91,5 @@ with(data,
 The test indicates there is a highly significant difference in Before and After
 
 
-
-
-
+## Playground
 
