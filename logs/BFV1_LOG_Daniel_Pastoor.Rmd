@@ -1,0 +1,78 @@
+---
+title: "Log file of analysis breathing peak flow"
+author: "Daniël Pastoor"
+output:
+  html_document:
+    toc: true
+    theme: united
+---
+
+
+# Preliminaries
+
+This research was conducted during the period from the end of April to the end of June 2023. This was done mainly on the Zernike campus in Groningen. With an exception of the korfball club in Zwolle.
+
+
+# Introduction
+
+## Goal
+> The goal is to find a relation between sporting and non sporting poeples in connection with there breathing peak flow before and after an excersise. 
+
+## Data collection
+People data were collected mostly at Hanze University on the Zernike Campas. But there was also data collected from a korfball club in utrecht. The data was collected on the prefered location of the subject. Then we began with measuring his breathing peak flow. Following with 10 jumping jacks and measured it again.
+
+## Theory
+Background information from literature!!
+
+- What is agentX
+- What is adrenaline & how is it determined?
+- etc.
+
+# Experimental work
+
+## May 15, 2023
+
+### Data reading
+
+Data were read from file:
+
+```{r}
+data <- read.table(file = "../raw_data/Data_breath.csv", header = T, sep = ",")
+dim(data)
+head(data)
+```
+This seems OK. The data dimensions and data types are according to what was expected.
+
+### Test of normality
+
+
+Today I am going to determine whether there is a significant difference between the before and after measurements.
+
+I want to carry out a t-test.
+
+To do that, I need to assess if the samples are normally distributed.
+
+This is the first analysis.
+
+```{r test-of-normality}
+shapiro.test(data$Before)
+shapiro.test(data$After)
+```
+There is no reason to assume non-normality here for the two data columns.
+
+## T-test
+
+```{r}
+with(data, 
+    t.test(x = Before, 
+           y = After,
+           paired = TRUE)
+)
+```
+The test indicates there is a highly significant difference in Before and After
+
+
+
+
+
+
