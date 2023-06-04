@@ -125,15 +125,78 @@ Dit was een probeer poging om een anova test uit te voeren. Helaas niet helemaal
 
 ## 2-6-2023
 ### Code
-```{r}
+```{r anova test}
 data_breath <-  data %>%
   mutate( Sporting = case_when(Sport == "None" ~ F, .default = T)) 
 
 #---------------------
 
 
-res <- aov(Peak_flow ~ Sex + Sporting + Has_activity, data = data_breath)
+res_sex_sporting_activity <- aov(Peak_flow ~ Sex + Sporting + Has_activity, data = data_breath)
 summary(res)
 
+data_man <- data_breath %>%
+  filter(Sex == "Man")
+
+res_man_sporting_activity <- aov(Peak_flow ~ Sporting + Has_activity, data = data_man)
+summary(res)
+
+data_woman <- data_breath %>%
+  filter(Sex == "Woman")
+
+res_woman_sporting_activity <- aov(Peak_flow ~ Sporting + Has_activity, data = data_woman)
+summary(res)
 
 ```
+# 3-6-2023
+## code
+```{r shapiro wilsk-test}
+normaal_verd_ajj <- data_breath %>%
+  filter(Has_activity == "True") %>%
+  select(Subject_id, Peak_flow)
+
+normaal_verd_ajj_woman <- data_woman %>%
+  filter(Has_activity == "True") %>%
+  select(Subject_id, Peak_flow)
+
+normaal_verd_ajj_man <- data_man %>%
+  filter(Has_activity == "True") %>%
+  select(Subject_id, Peak_flow)
+
+normaal_verd_bjj <- data_breath %>%
+  filter(Has_activity == "False") %>%
+  select(Subject_id, Peak_flow)
+
+normaal_verd_bjj_woman <- data_woman %>%
+  filter(Has_activity == "False") %>%
+  select(Subject_id, Peak_flow)
+
+normaal_verd_bjj_man <- data_man %>%
+  filter(Has_activity == "False") %>%
+  select(Subject_id, Peak_flow)
+
+shapiro.test(data_breath$Peak_flow)
+shapiro.test(normaal_verd_ajj$Peak_flow)
+shapiro.test(normaal_verd_bjj$Peak_flow)
+shapiro.test(normaal_verd_ajj_man$Peak_flow)
+shapiro.test(normaal_verd_ajj_woman$Peak_flow)
+shapiro.test(normaal_verd_bjj_man$Peak_flow)
+shapiro.test(normaal_verd_bjj_woman$Peak_flow)
+
+```
+# 4-6-2023
+## code
+```{r verschillende t-testen}
+mean_ajj_woman <- mean(normaal_verd_ajj_woman$Peak_flow)
+  
+mean_bjj_woman <- mean(normaal_verd_bjj_woman$Peak_flow)
+
+t.test(normaal_verd_ajj_woman$Peak_flow, y= normaal_verd_bjj_woman$Peak_flow, alternative ="two.sided", paired = TRUE)
+
+sporting_Woman <- data_woman %>% filter(Sporting == T)
+not_sporting_woman <- data_woman %>% filter(Sporting == F)
+
+t.test(sporting_Woman$Peak_flow, y=not_sporting_woman$Peak_flow, alternative = "greater")
+```
+
+
