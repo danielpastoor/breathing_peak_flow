@@ -148,7 +148,10 @@ res_woman_sporting_activity <- aov(Peak_flow ~ Sporting + Has_activity, data = d
 summary(res)
 
 ```
+
+
 # 3-6-2023
+checken of het normaal verdeeld is.
 ## code
 ```{r shapiro wilsk-test}
 normaal_verd_ajj <- data_breath %>%
@@ -175,28 +178,79 @@ normaal_verd_bjj_man <- data_man %>%
   filter(Has_activity == "False") %>%
   select(Subject_id, Peak_flow)
 
+
+normaal_verd_s_Woman <- data_woman %>% filter(Sporting == T)
+normaal_verd_ns_woman <- data_woman %>% filter(Sporting == F)
+normaal_verd_s_Man <- data_man %>% filter(Sporting == T)
+normaal_verd_ns_man <- data_man %>% filter(Sporting == F)
+
 shapiro.test(data_breath$Peak_flow)
+shapiro.test(data_woman$Peak_flow)
+shapiro.test(data_man$Peak_flow)
 shapiro.test(normaal_verd_ajj$Peak_flow)
 shapiro.test(normaal_verd_bjj$Peak_flow)
 shapiro.test(normaal_verd_ajj_man$Peak_flow)
 shapiro.test(normaal_verd_ajj_woman$Peak_flow)
 shapiro.test(normaal_verd_bjj_man$Peak_flow)
 shapiro.test(normaal_verd_bjj_woman$Peak_flow)
+shapiro.test(normaal_verd_ns_woman$Peak_flow)
+shapiro.test(normaal_verd_s_Woman$Peak_flow)
+shapiro.test(normaal_verd_ns_man$Peak_flow)
+shapiro.test(normaal_verd_s_Man$Peak_flow)
+
 
 ```
+Niet normaal verdeeld:
+man bjj: p-value = 0.5664
+man ajj: p-value = 0.7178
+woman bjj: p-value = 0.09359
+woman ajj: p-value = 0.1064
+woman s: p-value = 0.05549
+man ns: p-value = 0.5771
+man s: p-value = 0.1289
+
+```{r boxplot alle data}
+ggplot(data = data,
+       mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
+  geom_boxplot() +
+  stat_summary(fun = "mean", geom = "point",
+               color = "gold")
+```
+```{r histogram alle data}
+ggplot(data = data_breath) +
+       geom_histogram(mapping = aes(x = Peak_flow,  fill=Sex, col=Sex, group=Sex), bins = 30, alpha = 0.05, position="dodge", right=TRUE) 
+
+```
+
+
+
 # 4-6-2023
+Bij de verschillende waarden t-testen
 ## code
 ```{r verschillende t-testen}
-mean_ajj_woman <- mean(normaal_verd_ajj_woman$Peak_flow)
-  
-mean_bjj_woman <- mean(normaal_verd_bjj_woman$Peak_flow)
+t.test(normaal_verd_ajj$Peak_flow, y= normaal_verd_bjj$Peak_flow, alternative ="two.sided", paired = TRUE)
 
-t.test(normaal_verd_ajj_woman$Peak_flow, y= normaal_verd_bjj_woman$Peak_flow, alternative ="two.sided", paired = TRUE)
+```
 
-sporting_Woman <- data_woman %>% filter(Sporting == T)
-not_sporting_woman <- data_woman %>% filter(Sporting == F)
+# 5-6-2023
+Sommige datasets zijn niet normaal verdeeld.
+## code
+```{r verbetering op normaaltesten}
+data_breath %>% 
+  group_by(Sex, Has_activity, Sporting) %>%
+  summarise(Pvalue = shapiro.test(Peak_flow)$p.value, 
+            group_size = n(),
+            .groups = 'keep')
+```
 
-t.test(sporting_Woman$Peak_flow, y=not_sporting_woman$Peak_flow, alternative = "greater")
+```{r Mann-Whitney U Test}
+data_breath %>% 
+  group_by(Sex, Has_activity, Sporting) %>%
+  summarise(Pvalue = wilcox.test(Peak_flow, alternative = "greater")$p.value, 
+            group_size = n(),
+            .groups = 'keep')
+```
+
 ```
 
 
