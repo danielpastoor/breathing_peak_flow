@@ -1,5 +1,5 @@
 ---
-title: "Peak Flow"
+title: "Breathing peak Flow"
 authors: "<Daniël: 452871, Larissa: 432995 en Marian:446030 >"
 date: "`r Sys.Date()`"
 knit: (function(inputFile, encoding) {
