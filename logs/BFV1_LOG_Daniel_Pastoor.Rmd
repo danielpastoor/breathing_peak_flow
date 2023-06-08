@@ -1,0 +1,95 @@
+---
+title: "Log file of analysis breathing peak flow"
+author: "Daniël Pastoor"
+output:
+  html_document:
+    toc: true
+    theme: united
+---
+
+
+# Preliminaries
+
+This research was conducted during the period from the end of April to the end of June 2023. This was done mainly on the Zernike campus in Groningen. With an exception of the korfball club in Zwolle.
+
+
+# Introduction
+
+## Goal
+> The goal is to find a relation between sporting and non sporting poeples in connection with there breathing peak flow before and after an excersise. 
+
+## Data collection
+People data were collected mostly at Hanze University on the Zernike Campas. But there was also data collected from a korfball club in utrecht. The data was collected on the prefered location of the subject. Then we began with measuring his breathing peak flow. Following with 10 jumping jacks and measured it again.
+
+## Theory
+The purpose of this experiment was to determine whether or not sports/working out influences the peak flow rate of students. The peak flow rate is the maximum rate of airflow that a person can exhale and is measured in liters per minute.  A healthy peak flow rate lies between 400 and 600 liters per minute. A peak flow rate between 200 and 400 liters per minute can indicate asthma. The peak flow rate is measured using a spirometer. 
+
+Previous research has proven that exercising can increase one's peak flow rate. In this experiment an attempt to prove this will be done by measuring the peak flow rates of subjects before and after performing 10 jumping jacks. The subjects will be categorized in subjects that participate in sports/work out and subjects that don’t. 
+
+# Experimental work
+
+## April 17, 2023
+
+Today we did a before invesigation about what kind for subject we want to analyse.
+
+## May 10, 2023
+
+1. Today we started with our first testing on the zernike cammpus
+
+## May 11, 2023
+
+1. Been busy today testing Peak flow meter. To see if it still needed to be calibrated.
+2. after testing we were able to get some data from our class 
+3. Furthermore I went with my group towards willemdewijk school to find test persons.
+4. Also after that we went to ACLO to research more people there"
+
+## May 12, 2023
+
+1. Been busy today adjusting long capasity to flow peak.
+2. Further, today I created and set up the Git Repository with the proper directory structure
+3. In the process also created and completed the readme
+
+## May 15, 2023
+
+1. Today we started testing on te zernike campus in the Van Doornveste building. With the target to find no sporting subjects
+
+## May 17, 2023
+
+1. Today I started with creating the R markdown file and started with filling in some data
+2. Also I began with reading the data
+
+### Data reading
+
+Data were read from file:
+
+```{r}
+data <- read.table(file = "../raw_data/Data_breath.csv", header = T, sep = ",")
+dim(data)
+head(data)
+```
+This seems OK. The data dimensions and data types are according to what was expected.
+
+## May 22, 2023
+
+1. Today I added an ignore file so the data is not stored in the git repository.
+2. Also I added the hypothesis with the correct introduction.
+3. I added the protocol
+4. Changed some translation from dutch to english
+5. We sorted the data and changed the ; to ,
+
+## May 23, 2023
+
+1. Today we created a planner for who will do what.
+2. I added my 4 histograms about the diffrent groups.
+
+## 31 May, 2023
+
+1. Todat Marian and I have created the title for our final paper.
+
+## 1 June, 2023
+
+1. Today I checked my Histogram and had a meeting with my group!
+
+## 2 June, 2023
+
+2. Today I helped larissa with reacting the nessasery Anova test for our data.
