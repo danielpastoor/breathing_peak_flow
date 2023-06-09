@@ -236,6 +236,7 @@ t.test(normaal_verd_ajj$Peak_flow, y= normaal_verd_bjj$Peak_flow, alternative ="
 Sommige datasets zijn niet normaal verdeeld.
 ## code
 ```{r verbetering op normaaltesten}
+library(tidyr)
 data_breath %>% 
   group_by(Sex, Has_activity, Sporting) %>%
   summarise(Pvalue = shapiro.test(Peak_flow)$p.value, 
@@ -245,12 +246,11 @@ data_breath %>%
 
 ```{r Mann-Whitney U Test}
 data_breath %>% 
-  group_by(Sex, Has_activity, Sporting) %>%
-  summarise(Pvalue = wilcox.test(Peak_flow, alternative = "greater")$p.value, 
+  pivot_wider(names_from = Has_activity, values_from = Peak_flow) %>%
+  summarise(Pvalue = wilcox.test(True,y= False, alternative = "greater")$p.value, 
             group_size = n(),
             .groups = 'keep')
+data_breath
 ```
-
-```
-
-
+# 8-6-2023
+Foutje in 
