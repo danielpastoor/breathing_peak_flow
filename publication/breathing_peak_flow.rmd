@@ -68,32 +68,51 @@ Natuurlijk moeten spelling en grammatica (zo goed als) foutloos zijn! RStudio he
 
 Alle volgende onderdelen moet je opnemen in je eigen artikel. Let vooral ook op het minimu
 
-# Introductie Marian
-Marian
-Je start altijd met de maatschappelijke drijfveer voor je onderzoek; waarom is het van belang dat dit onderzoek is uitgevoerd?
-Vervolgens bespreek je de achtergronden van je onderzoek. Wat is er al eerder onderzocht op dit vlak en wat mist er juist nog; welke speciale technieken heb je gebruikt? Refereer zorgvuldig naar bronnen die je hebt gebruikt - zie ook paragraaf \@ref(refs).
+# Introduction
 
-Je eindigt de introductie met de doelstelling(en) van jouw onderzoek, en hoe je deze doelstellingen denkt te gaan verwezenlijken; de aanpak. Geef hier ook eventuele hypothesen. 
+Research has proven that exercising can improve asthma control in patients, but that it has little to no effect on one's peak expiratory flow rate  (PEFR). The PEFR is the maximum rate of airflow that a person can forcefully exhale.
+The PEFR can reliably indicate how adequate someone’s ventilation is as well as whether or not someone suffers from airflow obstruction.
+This experiment was conducted out of pure curiosity. However, if exercising does turn out to significantly increase one’s PEFR, and thus their airways, it could help reduce shortness of breath in patients. 
+A healthy PEFR lies between 400 and 600 litres per minute. A PEFR between 200 and 400 litres per minute can indicate asthma. A healthy PEFR varies from person to person and is also influenced by factors such as sex, age and height. The PEFR tends to be higher in males and taller people as opposed to females and shorter people.
+The PEFR is measured using a Peak Flow Meter, a small device with a scale ranging from 50 L/min to 800 L/min. To assess whether or not exercising increases one’s PEFR, students from the Hanze University  were measured using a Peak Flow Meter. These students were divided by sex and whether or not they participated in sports. Their PEFR’s were measured before and after performing 10 jumping jacks.
 
-De introductie bevat tussen de 400-800 woorden.
 
 
-# Materialen en Methoden Marian
 
-Materialen en Methoden beschrijft verhalend wat je hebt gebruikt (data, tools) en wat je hebt gedaan (ontwikkelde methodes). **_Het is essentieel dat dit hoofdstuk je onderzoek reproduceerbaar en valideerbaar maakt_**. Verwijs bij de start van dit hoofdstuk naar je code repository (meestal je github link).
+# Materials and methods
 
-Neem referenties op!
+Software:
+ R
+ Excel
 
-De materialen zijn de meetinstrumenten die je hebt gebruikt, maar ook bijvoorbeeld datasets die je hebt gedownload.
+Libraries:
+Dplyr
+Ggplot2
+Tidyverse
+Tidyr
 
-Beschrijf de gebruikte software tools, alsmede de bibliotheken/plugins, met naam, versie, referentie en gebruiksdoel (in dit project). Dit kan eventueel in een tabel an als die lang is mag het een online bijlage zijn.
+Devices:
+Peak flow meter
+Disinfectant wipes
+Laptop (for storing data)
 
-Beschrijf bestaande methodologieën met hun relevantie voor je project. Geef het doel, de toepassing en welke software en parameters er zijn gebruik. Voeg eventueel een flowchart toe.
-Beschrijf de gebruikte statistische methoden.
 
-Beschrijf wat je zelf in het kader van dit onderzoek hebt ontwikkeld aan methodologieën. Geef de naam van scripts/programma’s en waar deze (in je repo) te vinden zijn.
 
-Deze sectie bevat tussen de 400-800 woorden.
+To collect the data a peak flow meter, disinfectant wipes and a laptop have been used. The data was stored in an excel-file using a csv format.. The specific steps in which the data has been collected can be found in the git repository.
+The statistical programming language R has been used to process the data. The data has been plotted and visualised using the libraries dplyr, ggplot2 and tidyverse in R. Hypothesis testing of our data has also been achieved using R. The hypothesis tests used for this experiment were the Shapiro-Wilk test, one-tailed t-test, two-tailed t-test and ANOVA test.
+
+
+The Shapiro-Wilk test was performed to determine whether or not the data was normally distributed. Data is normally distributed when most of the data points are in the middle of the range whilst the rest of the data points are in the two extremes.
+
+
+The one-tailed t-test was performed on ………… A one-tailed t-test is used to determine if there is a significant difference between groups in a specific direction.
+
+
+The two-tailed t-test was performed on …… A two-tailed t-test is used to determine if there is a significant difference between groups in general, not specifically in one direction.
+
+
+The ANOVA (Analysis Of Variance)  test was performed on …… An ANOVA test is used when comparing more than two means. The ANOVA test can be performed using more than one independent variable.
+
 
 # Resultaten
 Daniel Plots en uitleg
