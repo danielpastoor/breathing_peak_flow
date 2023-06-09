@@ -25,14 +25,19 @@ De maximale uitademing, is een moment opnamen waarbij de persoon zo hard mogelij
 
 # Experimental work
 ## 17-4-2023
-Uitzoeken van onderwerp, uitvoeren van vooronderzoek.
+Overleggen met groepje en uitzoeken van onderwerp: longcapaciteit, vervolgens uitvoeren van vooronderzoek. Eerder uitgevoerd experiment naar gezocht. Hoe kan longcapaciteit gemeten worden? Wat zijn interessante hoeken die je kan meten met behulp van longcapaciteit?
+
+Doormiddel van de spirometer kan dit worden gemeten. 
+Een interessante hoek: de longcapaciteit na een sportieve activiteit.
 
 ## 3-5-2023
-maken van protocol versie 1, zie .... protocol.
+Spirometer is niet op school beschikbaar, ipv daarvoor een peakflow meter. Dit is voor de maximale uitademing.
+Maken van protocol, zie protocol.
+Hierbij zijn criterea verzonnen.
 
 ## 10-5-2023
 voorbereiding voor het meten, uitwerken van eerste versie van protocol.
-Uittesten van spirometer op elkaar.
+Uittesten van peakflow meter op elkaar.
 ### Code
 ```{r testdata}
 subject <- c("Marian", "Daniel", "Larissa", "Marian", "Daniel", "Larissa")
@@ -42,7 +47,7 @@ which_method <-c("volgens protocol", "volgens protocol", "volgens protocol","nie
 uittest_data <- data.frame(subjects, peakflow, which_method)
 
 ```
-Tijdens is gebleken dat we een aantal stappen konden verwijderen uit het oude protocol. Omdat we destijds nog niet het model van de spirometer wisten en we dit heel algemeen moesten houden.
+Tijdens is gebleken dat we een aantal stappen konden verwijderen uit het oude protocol. Omdat we destijds nog niet het model van de peakflow meter wisten en we dit heel algemeen moesten houden.
 
 ## 11-5-2023
 Data gemeten met spirometer.
@@ -51,9 +56,7 @@ Data gemeten met spirometer.
 Data gemeten met spirometer.
 
 ## 15-05-2023
-
 ### Openen van data
-
 Data is geopend.
 ### Code
 ```{r openen van data}
@@ -74,6 +77,7 @@ ggplot(data = data, aes(x = Sport , y = Peak_flow, colour = Sex)) +
   geom_point()
 
 ```
+Hier uit kan je halen dat mensen die niet sporten niet perse de laagste peak flow hebben.
 
 ##22-5-2023
 Vervolg op het plotten van de data. Het verschil tussen peakflow voor en na 10 jumpingjacks.
@@ -85,11 +89,10 @@ data <- data %>% group_by(Subject_id) %>% mutate(Diff_peak_flow = Peak_flow[2] -
 
 ggplot(data = data,
        mapping = aes(x = Subject_id, y = Diff_peak_flow, colour = Sex)) +
-  geom_point()+
-  geom_smooth(se = F)
+  geom_point()
 
 ```
-
+Hier kan je het verschil in peakflow voor en na 10 jumping jacks per onderzochtte zien. Er is een klein verschil in de peakflow bij de verschillende sexsen. Als je kijkt bij een peakflow van 100 zijn er meer mannen boven deze streep te zien.
 ##24-5-2023
 Vervolg op plotten van data.
 ### Code
@@ -117,13 +120,12 @@ two.way <- aov(Peak_flow + 4, data )
 
 summary(two.way)
 
-Data_breath %>% filter(Sex == "Vrouw")
-Data_breath
 
 ```
 Dit was een probeer poging om een anova test uit te voeren. Helaas niet helemaal gelukt.
 
 ## 2-6-2023
+Nieuwe poging op de anova. Om het effect van sport, sex en de sportieve activiteit op de peak flow significant is.
 ### Code
 ```{r anova test}
 data_breath <-  data %>%
@@ -133,22 +135,22 @@ data_breath <-  data %>%
 
 
 res_sex_sporting_activity <- aov(Peak_flow ~ Sex + Sporting + Has_activity, data = data_breath)
-summary(res)
+summary(res_sex_sporting_activity)
 
 data_man <- data_breath %>%
   filter(Sex == "Man")
 
 res_man_sporting_activity <- aov(Peak_flow ~ Sporting + Has_activity, data = data_man)
-summary(res)
+summary(res_man_sporting_activity)
 
 data_woman <- data_breath %>%
   filter(Sex == "Woman")
 
 res_woman_sporting_activity <- aov(Peak_flow ~ Sporting + Has_activity, data = data_woman)
-summary(res)
+summary(res_woman_sporting_activity)
 
 ```
-
+Naast sex is er geen significant effect aanwezig van de overige factoren. Het effect van sex lijkt mij logisch, dit doordat mensen fysiek anders zijn per geslacht.
 
 # 3-6-2023
 checken of het normaal verdeeld is.
@@ -179,9 +181,9 @@ normaal_verd_bjj_man <- data_man %>%
   select(Subject_id, Peak_flow)
 
 
-normaal_verd_s_Woman <- data_woman %>% filter(Sporting == T)
+normaal_verd_sport_Woman <- data_woman %>% filter(Sporting == T)
 normaal_verd_ns_woman <- data_woman %>% filter(Sporting == F)
-normaal_verd_s_Man <- data_man %>% filter(Sporting == T)
+normaal_verd_sport_Man <- data_man %>% filter(Sporting == T)
 normaal_verd_ns_man <- data_man %>% filter(Sporting == F)
 
 shapiro.test(data_breath$Peak_flow)
@@ -194,20 +196,22 @@ shapiro.test(normaal_verd_ajj_woman$Peak_flow)
 shapiro.test(normaal_verd_bjj_man$Peak_flow)
 shapiro.test(normaal_verd_bjj_woman$Peak_flow)
 shapiro.test(normaal_verd_ns_woman$Peak_flow)
-shapiro.test(normaal_verd_s_Woman$Peak_flow)
+shapiro.test(normaal_verd_sport_Woman$Peak_flow)
 shapiro.test(normaal_verd_ns_man$Peak_flow)
-shapiro.test(normaal_verd_s_Man$Peak_flow)
+shapiro.test(normaal_verd_sport_Man$Peak_flow)
 
 
 ```
-Niet normaal verdeeld:
+juist normaal verdeeld:
+man : p-value = 0.3135
 man bjj: p-value = 0.5664
 man ajj: p-value = 0.7178
 woman bjj: p-value = 0.09359
 woman ajj: p-value = 0.1064
-woman s: p-value = 0.05549
+woman sport: p-value = 0.05549
 man ns: p-value = 0.5771
-man s: p-value = 0.1289
+man sport: p-value = 0.1289
+
 
 ```{r boxplot alle data}
 ggplot(data = data,
@@ -216,24 +220,26 @@ ggplot(data = data,
   stat_summary(fun = "mean", geom = "point",
                color = "gold")
 ```
+Dit is een boxplot van alle data met daarbij de peakflow van voor en na de 10 jumping jacks. Zo is het gemiddelde van de vrouwen veel lager dan die bij de mannen. Maar heeft de mannen ook een veel grotere spreiding.
 ```{r histogram alle data}
 ggplot(data = data_breath) +
        geom_histogram(mapping = aes(x = Peak_flow,  fill=Sex, col=Sex, group=Sex), bins = 30, alpha = 0.05, position="dodge", right=TRUE) 
 
 ```
-
-
+Deze spreiding kan je ook goed zien in de histogram.
 
 # 4-6-2023
-Bij de verschillende waarden t-testen
+Bij de verschillende waarden t-testen proberen uittevoeren.
 ## code
 ```{r verschillende t-testen}
 t.test(normaal_verd_ajj$Peak_flow, y= normaal_verd_bjj$Peak_flow, alternative ="two.sided", paired = TRUE)
 
 ```
+Is er een verschil tussen de peakflow voor en na 10 jumping jacks. p-value = 0.0006757 is zeer laag, dus reject H0. Er is wel een verschil aanwezig. 
+Deze manier van t.testen uitvoeren leek mij heel lomp gemaakt dus vragen voor een paar tips.
 
 # 5-6-2023
-Sommige datasets zijn niet normaal verdeeld.
+Sommige datasets zijn niet normaal verdeeld dus een goed overzich is hier voornodig.
 ## code
 ```{r verbetering op normaaltesten}
 library(tidyr)
@@ -243,14 +249,23 @@ data_breath %>%
             group_size = n(),
             .groups = 'keep')
 ```
+Hier uit kan je goed halen dat alle datasets gelukkig normaalverdeeld zijn.
 
-```{r Mann-Whitney U Test}
-data_breath %>% 
-  pivot_wider(names_from = Has_activity, values_from = Peak_flow) %>%
-  summarise(Pvalue = wilcox.test(True,y= False, alternative = "greater")$p.value, 
-            group_size = n(),
-            .groups = 'keep')
-data_breath
+# 9-6-2023
+Aanpassen van weergaven van anova testen voor de paper. 
+## code
+```{r label = ANOVA, fig.cap='P values voor ANOVA testen van de effecten van sporten, een sportieve activiteit en het geslacht. }
+pvalue <- c()
+
+res_sex_sporting_activity <- summary(aov(Peak_flow ~ Sex + Sporting + Has_activity, data = data_breath))
+pvalue[length(pvalue)+1] <- unlist(res_sex_sporting_activity)['Pr(>F)1']
+
+res_man_sporting_activity <- summary(aov(Peak_flow ~ Sporting + Has_activity, data = data_man))
+pvalue[length(pvalue)+1] <- unlist(res_man_sporting_activity)['Pr(>F)1']
+
+res_woman_sporting_activity <- summary(aov(Peak_flow ~ Sporting + Has_activity, data = data_woman))
+pvalue[length(pvalue)+1] <- unlist(res_woman_sporting_activity)['Pr(>F)1']
+Soort_test <- c("sport + geslacht + activiteit", "sport + activiteit bij mannen", "sport + activiteit bij vrouwen")
+
+data.frame(Soort_test, pvalue)
 ```
-# 8-6-2023
-Foutje in 

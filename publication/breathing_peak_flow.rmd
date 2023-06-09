@@ -56,15 +56,6 @@ Zie ook de hoofdstukken in het geweldige book over [bookdown](https://bookdown.o
 
 Voor de rest: GIYF!
 
-## Taalgebruik
-
-Wetenschappelijk taalgebruik is heel anders dan dagelijks communiceren - laat staan de taal die in online wordt gebruikt in bv Whatsapp of Instagram! Wetenschappelijk taalgebruik is formeel, onpersoonlijk en  ondubbelzinnig.
-Een klein voorbeeld: Je schrijft nooit "ik heb de verandering van zoutconcentratie bij langduring huilen onderzocht" maar "de verandering van zoutconcentratie in de tijd bij aanhoudend huilen is onderzocht" 
-
-Natuurlijk moeten spelling en grammatica (zo goed als) foutloos zijn! RStudio heeft redelijk goede spellingscontrole, ook voor Nederlands (alhoewel je deze misschien wel apart moet installeren). Gebruik deze!
-
-
-Alle volgende onderdelen moet je opnemen in je eigen artikel. Let vooral ook op het minimu
 
 # Introductie Marian
 Marian
@@ -115,7 +106,7 @@ ggplot(data = airquality, mapping = aes(x = Solar.R, y = Ozone)) +
 ```
 ### Zijn de datasets normaalverdeeld?
 Bij de data worden de testen gedaan op kleinere datasets. De gemeten peak flow wordt hierin verdeeld in de verschillende sexse: man en vrouw. Deze worden vervolgens verdeeld in personen die wel en die niet sporten. Waarbij elk van deze groep weer wordt verdeeld in de gemeten peak flow voor en na de jumping jacks.
-```{r label = 'normaal verdeling van data', echo=FALSE, fig.cap='Per verschillende groep de p-value bij een Shapiro-Wilk test}
+```{r label = 'normaal verdeling van data', fig.cap='Per verschillende groep de p-value bij een Shapiro-Wilk test}
 data_breath %>% 
   group_by(Sex, Has_activity, Sporting) %>%
   summarise(Pvalue = shapiro.test(Peak_flow)$p.value, 
@@ -126,14 +117,19 @@ data_breath %>%
 Hieruit kan worden gehaald dat alle mogelijke combinaties een p-value boven de 0.05 hebben, en dus normaal verdeeld zijn.
 
 ###### dit moet ff naar de histogram
-```{r label = verschil tussen de verschillende sexsen, echo=FALSE, fig.cap='T-test of er een verschil in peakflow zit bij mannen en bij vrouwen'}
+```{r label = verschil tussen de verschillende sexsen, fig.cap='T-test of er een verschil in peakflow zit bij mannen en bij vrouwen'}
 t.test(data_woman$Peak_flow, y = data_man$Peak_flow)
+
+```{r verschillende t-testen}
+t.test(normaal_verd_ajj$Peak_flow, y= normaal_verd_bjj$Peak_flow, alternative ="two.sided", paired = TRUE)
+
+```
 ```
 De p-waard is 6.102e-11 dit betekent zoals eerder was benoemdt dat er een significant verschil aanwezig is tussen de peakflow van de mannen en vrouwen.
 
 ### Zit er een verschil in peakflow tussen de verschillende groepen voor en na 10 jumping jacks?
 Hiernaast wordt er gekeken of er verschillen zitten in de peakflow bij de verschillende groepen voor en na 10 jumping jacks.
-```{r label = verschillende t.test op groepen, echo=FALSE, fig.cap='De verschillende p-values van de t-testen bij de verschillende groepen voor en na 10 jumping'}
+```{r label = verschillende t.test op groepen, fig.cap='De verschillende p-values van de t-testen bij de verschillende groepen voor en na 10 jumping'}
 data_breath %>%
   group_by(Sex, Has_activity, Sporting) %>%
   pivot_wider(names_from = Has_activity, values_from = Peak_flow) %>%
@@ -148,7 +144,7 @@ Bij brouwen die wel en niet sporten er er wel een significant verschil in de pea
 ### Is er een effect van de factoren: sportende, uitvoering van kleine sportieve activiteit en geslacht op de gemeten peak flow?
 
 Doormiddel van een ANOVA test wordt de effect van de factoren: sexsen, of de persoon sport en de uitvoering van een kleine sportieve activiteit.
-```{r label = ANOVA, echo=FALSE, fig.cap='P values voor ANOVA testen van de effecten van sporten, een sportieve activiteit en het geslacht. }
+```{r label = ANOVA, fig.cap='P values voor ANOVA testen van de effecten van sporten, een sportieve activiteit en het geslacht. }
 pvalue <- c()
 
 res_sex_sporting_activity <- summary(aov(Peak_flow ~ Sex + Sporting + Has_activity, data = data_breath))
