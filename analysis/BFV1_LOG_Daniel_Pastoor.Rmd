@@ -163,3 +163,53 @@ ggplot(data = data_breath %>% filter(Sporting == F)) +
             x = "Breahing peak flow rate in L/m",
        alt = "A histogram plotted from a data collection with the filter if the person does not sport grouped by sex")
 ```
+
+June 9-6
+// histogram sportend en niet sported peak flow vergelijken
+
+// maximum en minum average
+// conclusie weg en signifififificsnt weg
+Vanuit de verzamelde gegevens kunnen we de volgende deelvragen beantwoorden:
+
+// er is wel een verschil 
+
+Bestaat er een verband tussen de frequentie en het type lichaamsbeweging en de piekstroom vóór en na fysieke activiteit bij mannelijke en vrouwelijke studenten tussen de 18 en 25 jaar?
+Is er een hogere piekstroomsnelheid bij mannelijke en vrouwelijke proefpersonen tussen de 18 en 25 jaar die aan lichaamsbeweging doen, in vergelijking met proefpersonen die dat niet doen?
+Als we kijken naar de piekstroom vóór en na fysieke activiteit, zien we zeker een significant verschil tussen mannen en vrouwen die wel of niet sporten. Dit blijkt uit de onderstaande grafiek, waarin te zien is dat de piekstroom na 10 jumping jacks hoger is bij mensen die sporten dan bij mensen die dat niet doen. Bovendien is de ademhalingspiekstroom na 10 jumping jacks lager bij mensen die niet sporten, in vergelijking met mensen die wel sporten. Op basis hiervan kunnen we concluderen dat er zeker een verschil is in de piekstroom bij mannen en vrouwen die wel of niet sporten, met betrekking tot hun ademhalingspiekstroom.
+
+Als we verder kijken naar de piekstroom vóór en na fysieke activiteit en dit vergelijken tussen mannen en vrouwen, kunnen we concluderen dat er geen significant verschil is. Wel is te zien dat de piekstroomsnelheid bij mannen hoger is, maar dit kan ook te maken hebben met de lichaamsbiologie van mannen en vrouwen. Als we echter kijken naar de verschillen tussen de voor- en nawaarden, zien we dat deze ongeveer gelijk zijn. Hieruit kunnen we concluderen dat het geslacht geen invloed heeft op de ademhalingspiekstroom wanneer we naar het verschil kijken. De hoogte van de waarde is echter mogelijk gerelateerd aan de lichaamsbiologie.
+
+__
+
+Presenteer je resultaten in een logische volgorde. Beschrijf wat er te zien is en werk toe naar het beantwoorden van je doelstelling. Beschrijf indien mogelijke de logica van de keuze voor opeenvolgende experimenten. In elke paragraaf worden de feitelijke conclusies gegeven (bv ‘de vergelijking laat zien dat het gemiddelde van groep A significant afwijkt van het gemiddelde van groep B, met een p-waarde van … Dit komt niet overeen met de in de literatuur (REF) beschreven waardes.’)
+Daniel Plots en uitleg
+Larissa teste
+]
+
+```{r, warning=FALSE, fig.cap='A histogram plotted from a data collection with the filter if the person sport grouped by sex'}
+# To add labels for the face_wrap
+data_breath <-  data_breath %>%
+  mutate( Has_activity_label = case_when(Has_activity == "True" ~ "After jumping jacks" , .default = "Before jumping jacks"))
+
+# histogram of people that sport
+ggplot(data = data_breath %>% filter(Sporting == T)) +
+       geom_histogram(mapping = aes(x = Peak_flow,  fill=Sex), bins = 30, position="dodge", right=TRUE) +
+      facet_wrap(~ Has_activity_label) +
+       labs(fill='Sex',
+            x = "Breahing peak flow rate in L/m")
+
+```
+
+```{r, warning=FALSE, fig.cap='A histogram plotted from a data collection with the filter if the person does not sport grouped by sex'}
+# To add labels for the face_wrap
+data_breath <-  data_breath %>%
+  mutate( Has_activity_label = case_when(Has_activity == "True" ~ "After jumping jacks" , .default = "Before jumping jacks"))
+
+# histogram of people that do not sport
+ggplot(data = data_breath %>% filter(Sporting == F)) +
+       geom_histogram(mapping = aes(x = Peak_flow,  fill=Sex), bins = 30, position="dodge", right=TRUE) +
+  facet_wrap(~ Has_activity_label) +
+       labs(fill='Sex',
+            x = "Breahing peak flow rate in L/m",
+       alt = "A histogram plotted from a data collection with the filter if the person does not sport grouped by sex")
+```

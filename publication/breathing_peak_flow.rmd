@@ -10,7 +10,7 @@ lang: nl # dit zorgt er voor dat "abstract" "samenvatting" gaat heten
 abstract: |
   Geef hier je samenvatting in maximaal 150 woorden. Het is een samenvatting van het hele artikel; niet alleen de resultaten! Begin met het belang van dit onderzoek, dan hoe het onderzoek is aangepakt en de belangrijkste resultaten en eindig met de implicaties ervan voor de wetenschap/de maatschappij. Neem nooit figuren of tabellen op in de samenvatting.
 
-bibliography: simple_template.bib # naam van je .bib file. Deze moet hetzelfde zijn als je Rmd bestandsnaam
+bibliography: breathing_peak_flow.bib # naam van je .bib file. Deze moet hetzelfde zijn als je Rmd bestandsnaam
 
 output:
   bookdown::pdf_document2:
@@ -40,7 +40,28 @@ knitr::opts_chunk$set(out.width = '100%', dpi=300) # configuratie voor figuur gr
 knitr::opts_chunk$set(echo = FALSE) # Deze regel zorgt ervoor GEEN ENKELE chunk getoond wordt! 
 # Laad alle gebruikte bibliotheken hier
 library(ggplot2)
+library(dplyr)
+library(tidyr)
+#devtools::install_github("benmarwick/wordcountaddin", type = "source", dependencies = TRUE)
 ```
+
+```{r data-reading, warning=FALSE}
+data_file <- "../raw_data/Data_breath.csv"
+
+#data format: Subject_id,Sport,Sport_times,Age,Length,Weight,Sex,Peak_flow,Has_activity,Device_number
+data_breath <- read.table(file = data_file,
+                        header = TRUE,
+                        sep = ",")
+```
+
+```{r data-verwerk, warning=FALSE}
+# get mean of the 2 different data points
+data_breath_diff <- data_breath %>% group_by(Subject_id) %>% mutate(Diff_peak_flow = Peak_flow[2] - Peak_flow[1])
+
+data_breath <-  data_breath %>%
+  mutate( Sporting = case_when(Sport == "None" ~ F, .default = T))
+```
+
 
 **NB** Gebruik altijd een naam voor iedere chunk. Dat maakt het *debuggen* van problemen bij het *knitten* van je RMarkdown document veel gemakkelijker.
 
@@ -96,37 +117,7 @@ Beschrijf wat je zelf in het kader van dit onderzoek hebt ontwikkeld aan methodo
 Deze sectie bevat tussen de 400-800 woorden.
 
 # Resultaten
-Daniel Plots en uitleg
-Larissa teste
 
-```{r, warning=FALSE, fig.cap='A histogram plotted from a data collection with the filter if the person sport grouped by sex'}
-# To add labels for the face_wrap
-data_breath <-  data_breath %>%
-  mutate( Has_activity_label = case_when(Has_activity == "True" ~ "After jumping jacks" , .default = "Before jumping jacks"))
-
-# histogram of people that sport
-ggplot(data = data_breath %>% filter(Sporting == T)) +
-       geom_histogram(mapping = aes(x = Peak_flow,  fill=Sex), bins = 30, position="dodge", right=TRUE) +
-      facet_wrap(~ Has_activity_label) +
-       labs(fill='Sex',
-            x = "Breahing peak flow rate in L/m")
-
-```
-
-```{r, warning=FALSE, fig.cap='A histogram plotted from a data collection with the filter if the person does not sport grouped by sex'}
-# To add labels for the face_wrap
-data_breath <-  data_breath %>%
-  mutate( Has_activity_label = case_when(Has_activity == "True" ~ "After jumping jacks" , .default = "Before jumping jacks"))
-
-# histogram of people that do not sport
-ggplot(data = data_breath %>% filter(Sporting == F)) +
-       geom_histogram(mapping = aes(x = Peak_flow,  fill=Sex), bins = 30, position="dodge", right=TRUE) +
-  facet_wrap(~ Has_activity_label) +
-       labs(fill='Sex',
-            x = "Breahing peak flow rate in L/m",
-       alt = "A histogram plotted from a data collection with the filter if the person does not sport grouped by sex")
-```
-!!
 Presenteer je resultaten in een logische volgorde. Beschrijf wat er te zien is en werk toe naar het beantwoorden van je doelstelling. Beschrijf indien mogelijke de logica van de keuze voor opeenvolgende experimenten. In elke paragraaf worden de feitelijke conclusies gegeven (bv ‘de vergelijking laat zien dat het gemiddelde van groep A significant afwijkt van het gemiddelde van groep B, met een p-waarde van … Dit komt niet overeen met de in de literatuur (REF) beschreven waardes.’)
 
 Gebruik zo veel mogelijk figuren om je informatie uit je resultaten over te brengen. Gebruik tabellen wanneer figuren minder geschikt zijn. In de tekst worden figuren en tabellen geïntroduceerd, besproken en de belangrijkste aspecten toegelicht.
