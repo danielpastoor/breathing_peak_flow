@@ -240,25 +240,12 @@ Dit is en boxplot van alle verkegen data.
 females_n <- data_breath %>%
   filter(Sex == "Woman", Sport == "None")
 
-before_jj_nf <- females_n[c(rep(TRUE,1),FALSE), ]
-
-
-after_jj_nf <- females_n[c(rep(FALSE,1),TRUE), ]
-
-
-
-ggplot(data = before_jj_nf, 
+ggplot(data = females_n, 
        mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
   geom_boxplot() + 
+  facet_wrap(~ Has_activity_label) +
   stat_summary(fun = "mean", geom = "point",
                color = "gold") + xlab("Peak flow rate in females that don't exercise before performing 10 jumping jacks")
-
-
-ggplot(data = after_jj_nf,
-       mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
-      geom_boxplot() +
-      stat_summary(fun = "mean", geom = "point",
-               color = "gold") +  xlab("Peak flow rate in females that don't exercise after performing 10 jumping jacks")
 
 
 #Boxplots of peak flow rate in females that do exercise before and after jumping jacks
@@ -266,28 +253,13 @@ ggplot(data = after_jj_nf,
 females_y <- data_breath %>%
   filter(Sex == "Woman", Sport != "None")
 
-print(females_y)
 
-before_jj_yf <- females_y[c(rep(TRUE,1),FALSE), ]
-
-
-after_jj_yf <- females_y[c(rep(FALSE,1),TRUE), ]
-
-
-
-ggplot(data = before_jj_yf,
+ggplot(data = females_y,
        mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
   geom_boxplot() +
+  facet_wrap(~ Has_activity_label) +
   stat_summary(fun = "mean", geom = "point",
                color = "gold") + xlab("Peak flow rate in females that do exercise before performing 10 jumping jacks")
-
-
-ggplot(data = after_jj_yf,
-       mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
-      geom_boxplot() +
-      stat_summary(fun = "mean", geom = "point",
-               color = "gold") +  xlab("Peak flow rate in females that do exercise after performing 10 jumping jacks")
-
 
 
 
@@ -295,50 +267,25 @@ ggplot(data = after_jj_yf,
 males_n <- data_breath %>%
   filter(Sex == "Man", Sport == "None")
 
-before_jj_nm <- males_n[c(rep(TRUE,1),FALSE), ]
-
-
-after_jj_nm <- males_n[c(rep(FALSE,1),TRUE), ]
-
-
-
-ggplot(data = before_jj_nm,
+ggplot(data = males_n,
        mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
   geom_boxplot() +
+  facet_wrap(~ Has_activity_label) +
   stat_summary(fun = "mean", geom = "point",
                color = "gold") + xlab("Peak flow rate in females that don't exercise before performing 10 jumping jacks")
-
-
-ggplot(data = after_jj_nm,
-       mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
-      geom_boxplot() +
-      stat_summary(fun = "mean", geom = "point",
-               color = "gold") +  xlab("Peak flow rate in males that don't exercise after performing 10 jumping jacks")
-
 
 #Boxplots of peak flow rate in males that do exercise before and after jumping jacks
 males_n <- data_breath %>%
   filter(Sex == "Man", Sport != "None")
 
-before_jj_ym <- males_n[c(rep(TRUE,1),FALSE), ]
 
-
-after_jj_ym <- males_n[c(rep(FALSE,1),TRUE), ]
-
-
-
-ggplot(data = before_jj_ym,
+ggplot(data = males_n,
        mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
   geom_boxplot() +
+  facet_wrap(~ Has_activity_label) +
   stat_summary(fun = "mean", geom = "point",
                color = "gold") + xlab("Peak flow rate in females that do exercise before performing 10 jumping jacks")
 
-
-ggplot(data = after_jj_ym,
-       mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
-      geom_boxplot() +
-      stat_summary(fun = "mean", geom = "point",
-               color = "gold") +  xlab("Peak flow rate in males that do exercise after performing 10 jumping jacks")
 ```
 Hier kan er gezien worden dat de gemiddelde hand lengte en hand breedte hoger liggen bij de man dan bij de vrouw. Ook kan er gezien worden dat de gemiddelde handbreedte hoger ligt in het bereik dan bij alle overige data.
 
