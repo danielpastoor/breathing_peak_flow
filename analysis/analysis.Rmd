@@ -177,7 +177,7 @@ This file will be saved in a Github environment to make it accessible for all gr
 Om data vanuit een tekstbestand in te lezen kan je dit codeblok gebruiken, aannemend dat je data er exact zo uitzien als in bovenstaande voorbeeld:
 
 ```{r data-reading, eval=FALSE}
-data_file <- "../raw_data/Data_breath.csv"
+data_file <- "raw_data/Data_breath.csv" #"../raw_data/Data_breath.csv"
 
 #data format: Subject_id,Sport,Sport_times,Age,Length,Weight,Sex,Peak_flow,Has_activity,Device_number
 data_breath <- read.table(file = data_file,
@@ -191,6 +191,9 @@ data_breath_diff <- data_breath %>% group_by(Subject_id) %>% mutate(Diff_peak_fl
 
 data_breath <-  data_breath %>%
   mutate( Sporting = case_when(Sport == "None" ~ F, .default = T))
+
+data_breath <-  data_breath %>%
+  mutate( Sporting_label = case_when(Sporting ~ "Sporting", .default = "Not sporting"))
 ```
 
 ### Beschrijvende statistiek
@@ -286,6 +289,25 @@ ggplot(data = males_n,
   stat_summary(fun = "mean", geom = "point",
                color = "gold") + xlab("Peak flow rate in females that do exercise before performing 10 jumping jacks")
 
+
+
+
+#1
+#1
+#1
+#1
+#1
+#Boxplots of peak flow rate in males that do exercise before and after jumping jacks
+males_n <- data_breath %>%
+  filter(Sex == "Man")
+
+
+ggplot(data = males_n,
+       mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
+  geom_boxplot() +
+  facet_wrap(~ Has_activity_label + Sporting_label) +
+  stat_summary(fun = "mean", geom = "point",
+               color = "gold") + xlab("Peak flow rate in females that do exercise before performing 10 jumping jacks")
 ```
 Hier kan er gezien worden dat de gemiddelde hand lengte en hand breedte hoger liggen bij de man dan bij de vrouw. Ook kan er gezien worden dat de gemiddelde handbreedte hoger ligt in het bereik dan bij alle overige data.
 
