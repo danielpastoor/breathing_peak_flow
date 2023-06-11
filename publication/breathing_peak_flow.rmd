@@ -70,13 +70,15 @@ Alle volgende onderdelen moet je opnemen in je eigen artikel. Let vooral ook op 
 
 # Introduction
 
-Research has proven that exercising can improve asthma control in patients, but that it has little to no effect on one's peak expiratory flow rate  (PEFR). The PEFR is the maximum rate of airflow that a person can forcefully exhale.
-The PEFR can reliably indicate how adequate someone’s ventilation is as well as whether or not someone suffers from airflow obstruction.
-This experiment was conducted out of pure curiosity. However, if exercising does turn out to significantly increase one’s PEFR, and thus their airways, it could help reduce shortness of breath in patients. 
-A healthy PEFR lies between 400 and 600 litres per minute. A PEFR between 200 and 400 litres per minute can indicate asthma. A healthy PEFR varies from person to person and is also influenced by factors such as sex, age and height. The PEFR tends to be higher in males and taller people as opposed to females and shorter people.
-The PEFR is measured using a Peak Flow Meter, a small device with a scale ranging from 50 L/min to 800 L/min. To assess whether or not exercising increases one’s PEFR, students from the Hanze University  were measured using a Peak Flow Meter. These students were divided by sex and whether or not they participated in sports. Their PEFR’s were measured before and after performing 10 jumping jacks.
-
-
+Asthma is a chronic lung disease that causes the airways to be constantly inflamed. The disease can occur at any age but is mostly present in children and adolescents. Approximately 600.000 people in the Netherlands suffer from asthma, of which 80.000 are children.
+In the year 2019 alone, the Dutch government has spent nearly 444 billion euros on asthma care. From this 444 billion euros, 40 percent was spent on medication. One of the symptoms of asthma that requires medical aid is shortness of breath, which is caused by the narrowing of the airways due to muscle tightening or inflammation. 
+Research has proven that exercising can improve asthma control in patients, but that it has little to no effect on one's peak expiratory flow rate  (PEFR). 
+The PEFR is the maximum rate of airflow that a person can forcefully exhale. The PEFR can reliably indicate the adequacy of someone’s ventilation and whether or not someone suffers from airflow obstruction.
+This experiment was conducted out of pure curiosity. However, if exercising does turn out to significantly increase one’s PEFR, and dilate their airways, it could help reduce shortness of breath in patients thereby reducing the costs of asthma care.
+A healthy PEFR ranges between 400 and 600 litres per minute. A PEFR between 200 and 400 litres per minute can indicate asthma.
+A healthy PEFR varies from person to person and is also influenced by factors such as sex, age and height. The PEFR tends to be higher in males and taller people compared  to females and shorter people. The PEFR is measured using a Peak Flow Meter, a small device with a scale ranging from 50 L/min to 800 L/min. 
+This paper aims to assess whether or not exercising can increase one’s PEFR. Additionally it will examine the effects of several factors on the PEFR.
+To conduct this experiment the PEFR of students from the Hanze University  were measured using a Peak Flow Meter. These students were divided by sex and whether or not they participated in sports. Their PEFR’s were measured before and after asking them to perform 10 jumping jacks. 
 
 
 # Materials and methods
@@ -96,22 +98,17 @@ Peak flow meter
 Disinfectant wipes
 Laptop (for storing data)
 
-
-
-To collect the data a peak flow meter, disinfectant wipes and a laptop have been used. The data was stored in an excel-file using a csv format.. The specific steps in which the data has been collected can be found in the git repository.
-The statistical programming language R has been used to process the data. The data has been plotted and visualised using the libraries dplyr, ggplot2 and tidyverse in R. Hypothesis testing of our data has also been achieved using R. The hypothesis tests used for this experiment were the Shapiro-Wilk test, one-tailed t-test, two-tailed t-test and ANOVA test.
+To collect the data a peak flow meter, disinfectant wipes and a laptop have been used. The data was stored in an excel-file using a csv format. The specific steps in which the data has been collected can be found in the git repository.
+The statistical programming language R has been used to process the data. The data has been plotted and visualised using the libraries dplyr, ggplot2 and tidyverse in R. Hypothesis testing of our data has also been achieved using R. The hypothesis tests used for this experiment were the Shapiro-Wilk test,  two-tailed t-test and ANOVA test.
 
 
 The Shapiro-Wilk test was performed to determine whether or not the data was normally distributed. Data is normally distributed when most of the data points are in the middle of the range whilst the rest of the data points are in the two extremes.
 
 
-The one-tailed t-test was performed on ………… A one-tailed t-test is used to determine if there is a significant difference between groups in a specific direction.
+The two-tailed t-test was performed on the factor jumping jacks. A two-tailed t-test is used to determine if there is a significant difference between groups in general, not specifically in one direction.
 
 
-The two-tailed t-test was performed on …… A two-tailed t-test is used to determine if there is a significant difference between groups in general, not specifically in one direction.
-
-
-The ANOVA (Analysis Of Variance)  test was performed on …… An ANOVA test is used when comparing more than two means. The ANOVA test can be performed using more than one independent variable.
+The ANOVA (Analysis Of Variance)  test was performed on the factors sport, sex and activity. An ANOVA test is used when comparing more than two means. The ANOVA test can be performed using more than one independent variable.
 
 
 # Resultaten
