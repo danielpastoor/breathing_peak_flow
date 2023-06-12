@@ -72,6 +72,9 @@ data_breath_female <- data_breath %>%
 
 Asthma is a chronic lung disease that causes the airways to be constantly inflamed. The disease can occur at any age but is mostly present in children and adolescents. Approximately 600.000 people in the Netherlands suffer from asthma, of which 80.000 are children.
 In the year 2019 alone, the Dutch government has spent nearly 444 billion euros on asthma care. From this 444 billion euros, 40 percent was spent on medication. One of the symptoms of asthma that requires medical aid is shortness of breath, which is caused by the narrowing of the airways due to muscle tightening or inflammation. 
+
+@article_regular_exercise
+
 Research has proven that exercising can improve asthma control in patients, but that it has little to no effect on one's peak expiratory flow rate. 
 The peak expiratory flow rate is the maximum rate of airflow that a person can forcefully exhale. The peak expiratory flow rate can reliably indicate the adequacy of someone’s ventilation and whether or not someone suffers from airflow obstruction.
 This experiment was conducted out of pure curiosity. However, if exercising does turn out to significantly increase one’s peak expiratory flow rate, and dilate their airways, it could help reduce shortness of breath in patients thereby reducing the costs of asthma care.
@@ -104,6 +107,7 @@ The statistical programming language R has been used to process the data. The da
 
 The Shapiro-Wilk test was performed to determine whether or not the data was normally distributed. Data is normally distributed when most of the data points are in the middle of the range whilst the rest of the data points are in the two extremes.
 
+The paired t-test was performed to determine whether or not there was a significant difference between the PEFR before and after performing 10 jumping jacks. A paired t-test is used on data from two sets of observations.
 
 The two-tailed t-test was performed on the factor jumping jacks. A two-tailed t-test is used to determine if there is a significant difference between groups in general, not specifically in one direction.
 
@@ -111,7 +115,7 @@ The two-tailed t-test was performed on the factor jumping jacks. A two-tailed t-
 The ANOVA (Analysis Of Variance)  test was performed on the factors sport, sex and activity. An ANOVA test is used when comparing more than two means. The ANOVA test can be performed using more than one independent variable.
 
 
-# Resultaten
+# Results
 
 The collected results of this experiment are first visualised in the following order of boxplots, histograms and table result of our test.
 The discuss of the distribution on the peak expiratory flow rate in the boxplots with the different groups (males,females, exercise, no exercise, before jumping jacks and after 10 jumping jacks).
@@ -259,27 +263,54 @@ Also the flow rate resulted somethimes in a lower flow rate.
 
 To determine whether or not the factors exercise, jumping jacks and sex had a significant effect on the peak expiratory flow rate an ANOVA test was performed. [Table \@ref(tab:ANOVA)]
 ```{r ANOVA, fig.cap='P values for ANOVA testing the effects of sports, an athletic activity and gender.'}
-pvalue <- c()
+Pvalue <- c()
 
 res_sex_sporting_activity <- summary(aov(Peak_flow ~ Sex + Sporting + Has_activity, data = data_breath))
-pvalue[length(pvalue)+1] <- unlist(res_sex_sporting_activity)['Pr(>F)1']
+Pvalue[length(Pvalue)+1] <- unlist(res_sex_sporting_activity)['Pr(>F)1']
+Pvalue[length(Pvalue)+1] <- unlist(res_sex_sporting_activity)['Pr(>F)2']
+Pvalue[length(Pvalue)+1] <- unlist(res_sex_sporting_activity)['Pr(>F)3']
+ANOVAtest <- c("sport", "sex",  "activity")
 
-res_man_sporting_activity <- summary(aov(Peak_flow ~ Sporting + Has_activity, data = data_breath_male))
-pvalue[length(pvalue)+1] <- unlist(res_man_sporting_activity)['Pr(>F)1']
-
-res_woman_sporting_activity <- summary(aov(Peak_flow ~ Sporting + Has_activity, data = data_breath_female))
-pvalue[length(pvalue)+1] <- unlist(res_woman_sporting_activity)['Pr(>F)1']
-Soort_variable <- c("sport + sex + activity", "sport + activity in men", "sport + activity in women")
+data.frame(ANOVAtest, Pvalue)
 
 knitr::kable(
-  data.frame(Soort_variable, pvalue), longtable = TRUE, booktabs = TRUE,
+  data.frame(ANOVAtest, Pvalue), longtable = TRUE, booktabs = TRUE,
   caption = 'P values for ANOVA testing the effects of sports, an athletic activity and gender.'
 )
 ```
-In the factors exercise, among the various factors considered, namely sex and physical activity, it was found that sex exhibited a remarkably significant difference. 
-The statistical analysis revealed a p-value of 5.046752e-11, further emphasizing the significance of this disparity.
+Based on the P value made by the ANOVA test, there could be suggested that gender has a effect on the data. The statistical analysis revealed a p-value of 5.046752e-11, further emphasizing the significance of this disparity. The effect of alone sport and athletic activity on the different sexses.
 
-# Discussie en Conclusies
+```{r ANOVA men, fig.cap='P values for ANOVA testing the effects of sports and an athletic activity on men.'}
+Pvalue <- c()
+res_man_sporting_activity <- summary(aov(Peak_flow ~ Sporting + Has_activity, data = data_breath_male))
+Pvalue[length(Pvalue)+1] <- unlist(res_man_sporting_activity)['Pr(>F)1']
+Pvalue[length(Pvalue)+1] <- unlist(res_man_sporting_activity)['Pr(>F)2']
+ANOVAtest <- c("sporting men",  "activity by men")
+
+data.frame(ANOVAtest, Pvalue)
+
+knitr::kable(
+  data.frame(ANOVAtest, Pvalue), longtable = TRUE, booktabs = TRUE,
+  caption = 'P values for ANOVA testing the effects of sports and an athletic activity on men.'
+)
+```
+```{r ANOVA women, fig.cap='P values for ANOVA testing the effects of sports and an athletic activity on women.'}
+Pvalue <- c()
+res_woman_sporting_activity <- summary(aov(Peak_flow ~ Sporting + Has_activity, data = data_breath_female))
+Pvalue[length(Pvalue)+1] <- unlist(res_woman_sporting_activity)['Pr(>F)1']
+Pvalue[length(Pvalue)+1] <- unlist(res_woman_sporting_activity)['Pr(>F)2']
+
+ANOVAtest <- c("sporting women","activity by women")
+
+data.frame(ANOVAtest, Pvalue)
+
+knitr::kable(
+  data.frame(ANOVAtest, Pvalue), longtable = TRUE, booktabs = TRUE,
+  caption = 'P values for ANOVA testing the effects of sports and an athletic activity on women.'
+)
+```
+Looking at sporting men with a P value of 0.07643009, there could be a effect on the data if men sport or not.
+# Discussions en Conclusions
 
 The results obtained from this experiment provide an insights into 
 the relationship between physical activity, exercise, and peak expiratory flow rate.
@@ -310,25 +341,11 @@ In summary, while the results of this experiment provide valuable insights,
 they should be interpreted with caution due to the limitations discussed.
 But the result determine that there is a relation between sporting and peak expiratory flow rate.
 
-# Online bijlagen
-Daniel Pastoor
-Vaak zijn online bijlagen vele malen groter dan het eigenlijke artikel. Wees nooit bang om te veel aan bijlagen aan te bieden. Je kan hierbij denken aan
+# Online attachments
+For attachments follow the link below to the github repository of this experiment:
 
-- de ruwe data
-- de code voor dataverwerking 
-- de code voor analyse
-- aanvullende figuren en tabellen
+https://github.com/danielpastoor/breathing_peak_flow
 
-Natuurlijk is een git(hub) repo daar de beste plek voor!
-Zorg ervoor de je repo logisch is ingericht met goede Readme document(en). 
-Ook de code zelf is waar nodig natuurlijk goed gedocumenteerd.
+# References
 
-## Wordcount
 
-```{r wordcount, message=FALSE}
-wordcountaddin:::text_stats()
-```
-
-# Referenties
-
-Een lijst van referenties wordt hier automagisch toegevoegd.
