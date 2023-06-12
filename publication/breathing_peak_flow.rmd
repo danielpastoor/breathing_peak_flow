@@ -1,16 +1,18 @@
 ---
-title: Breathing peak Flow # Geef je paper een naam die prikkelt, informatief is, en zo kort mogelijk
+title: Physical activity causes significant effect on peak expiratory flow rate in students at the Hanze University
 authors: "<Daniël: 452871, Larissa: 432995 en Marian:446030 >"
 author: |
-  | Daniël Pastoor $^1$, Larissa Voshol Feenstra $^1$, Marian Hasan $^1$
+  | Daniël Pastoor $^1$, Larissa Voshol $^1$, Marian Hasan $^1$
   | $^1$Hanzehogeschool
 
 lang: en
 
 abstract: |
-  Geef hier je samenvatting in maximaal 150 woorden. Het is een samenvatting van het hele artikel; niet alleen de resultaten! Begin met het belang van dit onderzoek, dan hoe het onderzoek is aangepakt en de belangrijkste resultaten en eindig met de implicaties ervan voor de wetenschap/de maatschappij. Neem nooit figuren of tabellen op in de samenvatting.
+ |  For this experiment the peak expiratory flow rate in students at Hanzehogeschool was measured to determine whether or not exercising has a significant effect on one’s peak expiratory flow rate. The peak expiratory flow rate (peak expiratory flow rate) can indicate a patient's ventilation adequacy.
+ | Results suggested that exercising does in fact lead to a significant increase of one’s peak expiratory flow rate. These findings could possibly offer a solution for patients suffering from shortness of breath. This would mean these patients would no longer have to rely on medicine to treat their shortness of breath. If there is no longer need for these medicines this would also reduce the costs of asthma care.
 
-bibliography: simple_template.bib # naam van je .bib file. Deze moet hetzelfde zijn als je Rmd bestandsnaam
+
+bibliography: breathing_peak_flow.bib 
 
 output:
   bookdown::pdf_document2:
@@ -22,52 +24,64 @@ output:
 
 ---
 
-# Introductie op deze template
-
-**Dit hoofdstuk niet in je eigen paper toevoegen!**
-
-Dit template bevat alle verplichte onderdelen van de paper die je moet schrijven. De titels van de secties mag je NIET wijzigen. Voor elk onderdeel is gegeven wat erin thuis hoort en hoe je dat kan aanpakken. Ook is er aangegeven hoeveel woorden er minimaal en maximaal in de sectie gebruikt mogen worden. In totaal mag je artikel niet minder dan 1000 en niet meer dan 2000 woorden bevatten.
-
-Gebruik de [wordcount plugin](https://github.com/benmarwick/wordcountaddin) om het aantal woorden te tellen van een sectie, en voeg aan het einde een totaal in (zoals al aanwezig in deze template).
-
-
-## Setup *Chunk* {#setup-chunk}
-
 ```{r setup, message=FALSE, warning=FALSE, include=FALSE}
 knitr::opts_chunk$set(out.width = '100%', dpi=300) # configuratie voor figuur grootte en resolutie
 knitr::opts_chunk$set(echo = FALSE) # Deze regel zorgt ervoor GEEN ENKELE chunk getoond wordt! 
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_knit$set(eval.after = "fig.cap")
 # Laad alle gebruikte bibliotheken hier
 library(ggplot2)
 library(dplyr)
 library(tidyr)
+#devtools::install_github("benmarwick/wordcountaddin", type = "source", dependencies = TRUE)
 ```
 
-## Code "*Chunks*" wel of niet tonen
+```{r data-reading, warning=FALSE}
+data_file <- "../raw_data/Data_breath.csv"
 
-In principe laat je code nooit zien in een publicatie, behalve als de code expliciet besproken wordt en een essentieel onderdeel vormt van je werk. Je kan code gemakkelijk verbergen door gebruik te maken van de optie `echo=FALSE` in de chunk header. Ook storende output kan je eventueel verbergen door gebruik te maken van `message=FALSE` of `warning=FALSE`. Eventueel kan je all chunks in een keer verbergen door dit in je *setup chunk* te plaatsen: `knitr::opts_chunk$set(echo = FALSE)`.
+#data format: Subject_id,Sport,Sport_times,Age,Length,Weight,Sex,Peak_flow,Has_activity,Device_number
+data_breath <- read.table(file = data_file,
+                        header = TRUE,
+                        sep = ",")
+```
 
-## Referenties / citeren {#refs}
+```{r data-verwerk, warning=FALSE}
+# get mean of the 2 different data points
+data_breath_diff <- data_breath %>% group_by(Subject_id) %>% mutate(Diff_peak_flow = Peak_flow[2] - Peak_flow[1])
 
-Voor alle secties geldt dat je referenties kan gebruiken naar andere publicaties (externe referenties ofwel citatie) of naar secties, tabellen of figuren in je eigen publicatie (interne referenties). Voor externe referenties gebruik je deze notatie: `[@<ref_key]`, bijvoorbeeld `[@xie2013ddrk]`. Hier gebruik ik hem echt: [@xie2013ddrk]. De *processing engine* zal in het bibliografie bestand zoals opgegeven in de ***yaml header*** van dit bestand (`simple_template.bib`) zoeken naar de referentie met deze naam en vervolgens de hele referentie onderaan in het document opnemen. Kijk vooral in het `.bin` document hoe je deze kan gebruiken.
+data_breath <-  data_breath %>%
+  mutate( Sporting = case_when(Sport == "None" ~ F, .default = T))
 
-Interne referenties naar tabellen, figuren, equations en secties kan je maken door deze syntax te gebruiken: `\@ref(fig:<figuur-naam>)` waarbij `<figuur-naam>` de naam is van het chunk waarin de figuur gemaakt wordt. Hetzelfde werkt voor tabellen: `\@ref(tab:<tabel-naam>)`. Een sectie kan je labelen door er `{#label-naam}` achter te zetten. Bijvoorbeeld, dit `\@ref(setup-chunk)` linkt terug naar de sectie over de setup chunk in sectie [\@ref(setup-chunk)].
+data_breath <-  data_breath %>%
+  mutate( Sporting_label = case_when(Sporting ~ "Sporting", .default = "Not sporting"))
 
-Zie ook de hoofdstukken in het geweldige book over [bookdown](https://bookdown.org/yihui/bookdown/) [hier](https://bookdown.org/yihui/bookdown/cross-references.html) en [hier](https://bookdown.org/yihui/rmarkdown-cookbook/cross-ref.html)
+# To add labels for the face_wrap
+data_breath <-  data_breath %>%
+  mutate( Has_activity_label = case_when(Has_activity == "True" ~ "After jumping jacks" , .default = "Before jumping jacks"))
 
-Voor de rest: GIYF!
+# variable for man
+data_breath_male <- data_breath %>%
+  filter(Sex == "Man")
 
+# variable for woman
+data_breath_female <- data_breath %>%
+  filter(Sex == "Woman")
+```
 
 # Introduction
 
 Asthma is a chronic lung disease that causes the airways to be constantly inflamed. The disease can occur at any age but is mostly present in children and adolescents. Approximately 600.000 people in the Netherlands suffer from asthma, of which 80.000 are children.
 In the year 2019 alone, the Dutch government has spent nearly 444 billion euros on asthma care. From this 444 billion euros, 40 percent was spent on medication. One of the symptoms of asthma that requires medical aid is shortness of breath, which is caused by the narrowing of the airways due to muscle tightening or inflammation. 
-Research has proven that exercising can improve asthma control in patients, but that it has little to no effect on one's peak expiratory flow rate  (PEFR). 
-The PEFR is the maximum rate of airflow that a person can forcefully exhale. The PEFR can reliably indicate the adequacy of someone’s ventilation and whether or not someone suffers from airflow obstruction.
-This experiment was conducted out of pure curiosity. However, if exercising does turn out to significantly increase one’s PEFR, and dilate their airways, it could help reduce shortness of breath in patients thereby reducing the costs of asthma care.
-A healthy PEFR ranges between 400 and 600 litres per minute. A PEFR between 200 and 400 litres per minute can indicate asthma.
-A healthy PEFR varies from person to person and is also influenced by factors such as sex, age and height. The PEFR tends to be higher in males and taller people compared  to females and shorter people. The PEFR is measured using a Peak Flow Meter, a small device with a scale ranging from 50 L/min to 800 L/min. 
-This paper aims to assess whether or not exercising can increase one’s PEFR. Additionally it will examine the effects of several factors on the PEFR.
-To conduct this experiment the PEFR of students from the Hanze University  were measured using a Peak Flow Meter. These students were divided by sex and whether or not they participated in sports. Their PEFR’s were measured before and after asking them to perform 10 jumping jacks. 
+
+@article_regular_exercise
+
+Research has proven that exercising can improve asthma control in patients, but that it has little to no effect on one's peak expiratory flow rate. 
+The peak expiratory flow rate is the maximum rate of airflow that a person can forcefully exhale. The peak expiratory flow rate can reliably indicate the adequacy of someone’s ventilation and whether or not someone suffers from airflow obstruction.
+This experiment was conducted out of pure curiosity. However, if exercising does turn out to significantly increase one’s peak expiratory flow rate, and dilate their airways, it could help reduce shortness of breath in patients thereby reducing the costs of asthma care.
+A healthy peak expiratory flow rate ranges between 400 and 600 litres per minute. A peak expiratory flow rate between 200 and 400 litres per minute can indicate asthma.
+A healthy peak expiratory flow rate varies from person to person and is also influenced by factors such as sex, age and height. The peak expiratory flow rate tends to be higher in males and taller people compared  to females and shorter people. The peak expiratory flow rate is measured using a Peak Flow Meter, a small device with a scale ranging from 50 L/min to 800 L/min. 
+This paper aims to assess whether or not exercising can increase one’s peak expiratory flow rate. Additionally it will examine the effects of several factors on the peak expiratory flow rate.
+To conduct this experiment the peak expiratory flow rate of students from the Hanze University  were measured using a Peak Flow Meter. These students were divided by sex and whether or not they participated in sports. Their peak expiratory flow rate’s were measured before and after asking them to perform 10 jumping jacks. 
 
 
 # Materials and methods
@@ -93,6 +107,7 @@ The statistical programming language R has been used to process the data. The da
 
 The Shapiro-Wilk test was performed to determine whether or not the data was normally distributed. Data is normally distributed when most of the data points are in the middle of the range whilst the rest of the data points are in the two extremes.
 
+The paired t-test was performed to determine whether or not there was a significant difference between the PEFR before and after performing 10 jumping jacks. A paired t-test is used on data from two sets of observations.
 
 The two-tailed t-test was performed on the factor jumping jacks. A two-tailed t-test is used to determine if there is a significant difference between groups in general, not specifically in one direction.
 
@@ -100,125 +115,237 @@ The two-tailed t-test was performed on the factor jumping jacks. A two-tailed t-
 The ANOVA (Analysis Of Variance)  test was performed on the factors sport, sex and activity. An ANOVA test is used when comparing more than two means. The ANOVA test can be performed using more than one independent variable.
 
 
-# Resultaten
-Daniel Plots en uitleg
-Larissa teste
+# Results
 
-Presenteer je resultaten in een logische volgorde. Beschrijf wat er te zien is en werk toe naar het beantwoorden van je doelstelling. Beschrijf indien mogelijke de logica van de keuze voor opeenvolgende experimenten. In elke paragraaf worden de feitelijke conclusies gegeven (bv ‘de vergelijking laat zien dat het gemiddelde van groep A significant afwijkt van het gemiddelde van groep B, met een p-waarde van … Dit komt niet overeen met de in de literatuur (REF) beschreven waardes.’)
+The collected results of this experiment are first visualised in the following order of boxplots, histograms and table result of our test.
+The discuss of the distribution on the peak expiratory flow rate in the boxplots with the different groups (males,females, exercise, no exercise, before jumping jacks and after 10 jumping jacks).
 
-Gebruik zo veel mogelijk figuren om je informatie uit je resultaten over te brengen. Gebruik tabellen wanneer figuren minder geschikt zijn. In de tekst worden figuren en tabellen geïntroduceerd, besproken en de belangrijkste aspecten toegelicht.
+Figure \@ref(fig:female-box-plot) shows the peak expiratory flow rate in females that exercise before and after performing 10 jumping jacks this visualised using a boxplot where it is also split by if the female sport or not.
 
-Voorzie je figuren van een nummer en een beschrijvende titel. Zorg voor correcte as-labels (eenheid en grootheid), legenda en bijschrift. Hier is een voorbeeldje.
+```{r female-box-plot, fig.align='center', fig.width="50%", fig.cap='Box plot with the peak flow rate in females that do exercise before performing 10 jumping jacks'}
+#Boxplots of peak flow rate in females that do exercise before and after jumping jacks
 
-```{r plot-demo, warning=FALSE, fig.cap='Ozon concentraties geplot tegen zonlicht intensiteit, vergeleken over verschillende maanden. Lineaire modellen (blauwe lijnen) en confidence intervals (grijze gebieden) zijn hieraan toegevoegd.'}
-airquality$Month_f = factor(airquality$Month, levels = 5:9, labels = month.abb[5:9])
-ggplot(data = airquality, mapping = aes(x = Solar.R, y = Ozone)) +
-    geom_smooth(method = "lm", formula = y ~ x) +
-    geom_point(aes(color = Month_f), alpha = 0.7) + 
-    facet_wrap(. ~ Month_f) +
-    ylab("Ozone (ppb)") +
-    xlab("Solar radiation (lang)") +
-    theme(legend.title = element_blank())
+ggplot(data = data_breath_female,
+       mapping = aes(x = Sex, y = Peak_flow)) +
+  geom_boxplot() +
+  facet_wrap(~ Has_activity_label + Sporting_label) +
+  stat_summary(fun = "mean", geom = "point",
+               color = "gold")  +
+  xlab("Sex") +
+  ylab("Breathing peak flow rate in L/m")
 ```
-### Zijn de datasets normaalverdeeld?
-Bij de data worden de testen gedaan op kleinere datasets. De gemeten peak flow wordt hierin verdeeld in de verschillende sexse: man en vrouw. Deze worden vervolgens verdeeld in personen die wel en die niet sporten. Waarbij elk van deze groep weer wordt verdeeld in de gemeten peak flow voor en na de jumping jacks.
-```{r label = 'normaal verdeling van data', fig.cap='Per verschillende groep de p-value bij een Shapiro-Wilk test}
-data_breath %>% 
+
+Figure \@ref(fig:male-box-plot) shows the peak expiratory flow rate in males that exercise before and after performing 10 jumping jacks this visualised using a boxplot where it is also split by if the male sport or not.
+
+```{r male-box-plot, fig.align='center', fig.width="50%", fig.cap='Box plot with the peak flow rate in males that do exercise before performing 10 jumping jacks'}
+#Boxplots of peak flow rate in male that do exercise before and after jumping jacks
+
+ggplot(data = data_breath_male,
+       mapping = aes(x = Sex, y = Peak_flow)) +
+  geom_boxplot() +
+  facet_wrap(~ Has_activity_label + Sporting_label) +
+  stat_summary(fun = "mean", geom = "point",
+               color = "gold") +
+  xlab("Sex") +
+  ylab("Breathing peak flow rate in L/m")
+```
+
+
+The boxplots visualised above [Figure \@ref(fig:female-box-plot) & Figure \@ref(fig:male-box-plot)] shows that for both males and females the mean of the peak expiratory flow rate is higher after performing the 10 jumping jacks compared to it before. 
+
+To get further insight on the effects of exercising on the peak expiratory flow rate, these following histograms were made to show the distribution of the peak expiratory flow rate in subjects that exercise and do not exercise.
+The histogram in figure \@ref(fig:sporting-histograms) shows the peak expiratory flow rate in students that exercised grouped by their sex.
+
+```{r sporting-histograms,  warning=FALSE, fig.width="50%", fig.cap=paste('A histogram plotted from a data collection with the filter if the person sport and grouped by sex with a ', pvalue_label) }
+data_sporting <- data_breath %>% filter(Sporting == T)
+
+pvalue <- t.test((data_sporting %>% filter(Sex == "Woman"))$Peak_flow, 
+y = (data_sporting %>% filter(Sex == "Man"))$Peak_flow)$p.value
+
+# histogram of people that sport
+ggplot(data = data_sporting) +
+       geom_histogram(mapping = aes(x = Peak_flow,  fill=Sex), bins = 30, position="dodge", right=TRUE) +
+       facet_wrap(~ Has_activity_label) +
+       labs(fill='Sex',
+            x = "Breathing peak flow rate in L/m")
+            
+pvalue_label<- ""
+
+if (pvalue < 0.01){
+  pvalue_label <- "P < 0.01"
+} else {
+  pvalue_label <- paste("P is ", pvalue)
+}
+```
+
+These following histograms were made to show the distribution to get further insight on the effects of exercising on the peak expiratory flow rate
+The histogram in figure \@ref(fig:no-sporting-histograms) shows the peak expiratory flow rate in students that don’t exercise, grouped by sex.
+
+
+```{r no-sporting-histograms, warning=FALSE, fig.width="50%", fig.cap=paste('A histogram plotted from a data collection with the filter if the person does not sport and grouped by sex with a ', pvalue_label)}
+data_not_sporting <- data_breath %>% filter(Sporting == F)
+
+pvalue <- t.test((data_not_sporting %>% filter(Sex == "Woman"))$Peak_flow, 
+y = (data_not_sporting %>% filter(Sex == "Man"))$Peak_flow)$p.value
+
+# histogram of people that do not sport
+ggplot(data = data_not_sporting) +
+       geom_histogram(mapping = aes(x = Peak_flow,  fill=Sex), bins = 30, position="dodge", right=TRUE) +
+       facet_wrap(~ Has_activity_label) +
+       labs(fill='Sex',
+            x = "Breathing peak flow rate in L/m",
+       alt = "A histogram plotted from a data collection with the filter if the person does not sport grouped by sex")
+
+pvalue_label<- ""
+
+if (pvalue < 0.01){
+  pvalue_label <- "P < 0.01"
+} else {
+  pvalue_label <- paste("P is ", pvalue)
+}
+```
+
+The histograms of males and females that exercise show a higher peak expiratory flow rate compared to males and females that don’t exercise. 
+Furthermore, the difference between the peak expiratory flow rate before and after jumping jacks seems to be  higher in males and females that exercise than in males and females that don’t.
+
+Another observation is that the peak expiratory flow rate in males and females that don’t exercise seems to be lower after performing jumping jacks.
+
+
+To determine whether or not these observations were significant, several t-tests have been performed on the data.
+
+T-tests can only be performed on data that is normally distributed. To determine whether or not the data is normally distributed a Shapiro-Wilk test was performed. 
+To do this the data has been divided into smaller separate datasets. 
+The peak expiratory flow rate’s have first been grouped by sex. 
+Then the sexes have been further grouped by whether or not they exercise, 
+and the peak expiratory flow rate’s before and after performing jumping jacks.[Table \@ref(tab:normal-distribution-of-data)] 
+
+```{r normal-distribution-of-data, fig.cap='Per different group the p-value in a Shapiro-Wilk test.'}
+knitr::kable(
+  data_breath %>% 
   group_by(Sex, Has_activity, Sporting) %>%
   summarise(Pvalue = shapiro.test(Peak_flow)$p.value, 
             group_size = n(),
             .groups = 'keep')%>%
-  select(Has_activity, Sex, Sporting, Pvalue)
+  select(Has_activity, Sex, Sporting, Pvalue), longtable = TRUE, booktabs = TRUE,
+  caption = 'Per different group the p-value in a Shapiro-Wilk test.'
+)
 ```
-Hieruit kan worden gehaald dat alle mogelijke combinaties een p-value boven de 0.05 hebben, en dus normaal verdeeld zijn.
 
-###### dit moet ff naar de histogram
-```{r label = verschil tussen de verschillende sexsen, fig.cap='T-test of er een verschil in peakflow zit bij mannen en bij vrouwen'}
-t.test(data_woman$Peak_flow, y = data_man$Peak_flow)
+All the p-values are higher than 0.05 meaning that all the data is normally distributed.
 
-```{r verschillende t-testen}
-t.test(normaal_verd_ajj$Peak_flow, y= normaal_verd_bjj$Peak_flow, alternative ="two.sided", paired = TRUE)
 
-```
-```
-De p-waard is 6.102e-11 dit betekent zoals eerder was benoemdt dat er een significant verschil aanwezig is tussen de peakflow van de mannen en vrouwen.
-
-### Zit er een verschil in peakflow tussen de verschillende groepen voor en na 10 jumping jacks?
-Hiernaast wordt er gekeken of er verschillen zitten in de peakflow bij de verschillende groepen voor en na 10 jumping jacks.
-```{r label = verschillende t.test op groepen, fig.cap='De verschillende p-values van de t-testen bij de verschillende groepen voor en na 10 jumping'}
+To determine if there was a significant difference in peak expiratory flow rate before and after 10 jumping jacks in the different groups, a two-sided t-test was performed. 
+[Table \@ref(tab:different-t-test-on-groups)]
+```{r different-t-test-on-groups, fig.cap='The different p-values of the t-tests among the different groups before and after 10 jumps'}
+knitr::kable( 
 data_breath %>%
   group_by(Sex, Has_activity, Sporting) %>%
+  select(-Has_activity_label) %>%
   pivot_wider(names_from = Has_activity, values_from = Peak_flow) %>%
-  summarise(Pvalue = t.test(True,y= False, alternative = "two.sided", paired = TRUE)$p.value, 
-            group_size = n(),
-            .groups = 'keep')%>%
-  select(Sex, Sporting, Pvalue)
+  summarise(Pvalue = t.test(x = True,y= False, alternative = "two.sided", paired = TRUE)$p.value, 
+           group_size = n(),
+          .groups = 'keep')%>%
+ select(Sex, Sporting, Pvalue), longtable = TRUE, booktabs = TRUE,
+  caption = 'The different p-values of the t-tests among the different groups before and after 10 jumps.'
+)
 ```
-Bij mannen die wel en niet sporten is er geen significant verschil in de peakflow voor de 10 jumping jacks en na de 10 jumping jacks.
-Bij brouwen die wel en niet sporten er er wel een significant verschil in de peakflow voor de 10 jumping jacks en na de 1 jumping jacks.
 
-### Is er een effect van de factoren: sportende, uitvoering van kleine sportieve activiteit en geslacht op de gemeten peak flow?
+There is no significant difference in peak expiratory 
+flow rate before and after 10 jumping jacks in females
+that exercise and don not exercise. 
 
-Doormiddel van een ANOVA test wordt de effect van de factoren: sexsen, of de persoon sport en de uitvoering van een kleine sportieve activiteit.
-```{r label = ANOVA, fig.cap='P values voor ANOVA testen van de effecten van sporten, een sportieve activiteit en het geslacht. }
-pvalue <- c()
+Males that exercise and do not exercise do
+show a significant difference in the peak expiratory flow rate
+before and after 10 jumping jacks. This is mostly because the sporting
+group of men did a fintess sport. 
+Also the flow rate resulted somethimes in a lower flow rate.
+
+
+To determine whether or not the factors exercise, jumping jacks and sex had a significant effect on the peak expiratory flow rate an ANOVA test was performed. [Table \@ref(tab:ANOVA)]
+```{r ANOVA, fig.cap='P values for ANOVA testing the effects of sports, an athletic activity and gender.'}
+Pvalue <- c()
 
 res_sex_sporting_activity <- summary(aov(Peak_flow ~ Sex + Sporting + Has_activity, data = data_breath))
-pvalue[length(pvalue)+1] <- unlist(res_sex_sporting_activity)['Pr(>F)1']
+Pvalue[length(Pvalue)+1] <- unlist(res_sex_sporting_activity)['Pr(>F)1']
+Pvalue[length(Pvalue)+1] <- unlist(res_sex_sporting_activity)['Pr(>F)2']
+Pvalue[length(Pvalue)+1] <- unlist(res_sex_sporting_activity)['Pr(>F)3']
+ANOVAtest <- c("sport", "sex",  "activity")
 
-res_man_sporting_activity <- summary(aov(Peak_flow ~ Sporting + Has_activity, data = data_man))
-pvalue[length(pvalue)+1] <- unlist(res_man_sporting_activity)['Pr(>F)1']
+data.frame(ANOVAtest, Pvalue)
 
-res_woman_sporting_activity <- summary(aov(Peak_flow ~ Sporting + Has_activity, data = data_woman))
-pvalue[length(pvalue)+1] <- unlist(res_woman_sporting_activity)['Pr(>F)1']
-Soort_test <- c("sport + geslacht + activiteit", "sport + activiteit bij mannen", "sport + activiteit bij vrouwen")
-
-data.frame(Soort_test, pvalue)
+knitr::kable(
+  data.frame(ANOVAtest, Pvalue), longtable = TRUE, booktabs = TRUE,
+  caption = 'P values for ANOVA testing the effects of sports, an athletic activity and gender.'
+)
 ```
-Bij de test waar de factoren: sport, geslacht en activiteit zijn behandeld, is een p-value van 5.046752e-11. Dit betekent dat er een effect van geslacht op de peakflow zit. Daarbij zijn er apparte testen afgenomen om het effect los van het geslacht te bekijken. Maar deze is niet aanwezig.
+Based on the P value made by the ANOVA test, there could be suggested that gender has a effect on the data. The statistical analysis revealed a p-value of 5.046752e-11, further emphasizing the significance of this disparity. The effect of alone sport and athletic activity on the different sexses.
 
-Geef tabellen bovenaan een titel en bijschrift die de inhoud beschrijft en onderaan voetnoten die kolomnamen of specifieke waardes verklaren.
+```{r ANOVA men, fig.cap='P values for ANOVA testing the effects of sports and an athletic activity on men.'}
+Pvalue <- c()
+res_man_sporting_activity <- summary(aov(Peak_flow ~ Sporting + Has_activity, data = data_breath_male))
+Pvalue[length(Pvalue)+1] <- unlist(res_man_sporting_activity)['Pr(>F)1']
+Pvalue[length(Pvalue)+1] <- unlist(res_man_sporting_activity)['Pr(>F)2']
+ANOVAtest <- c("sporting men",  "activity by men")
 
-Deze sectie bevat tussen de 600-1200 woorden.
+data.frame(ANOVAtest, Pvalue)
 
-
-# Discussie en Conclusies
-Gezamelijk hand ik hand
-Formuleer je conclusie door eerst in te zoomen op je eigen data en daarna uit te zoomen. Zoom in door je resultaten samen te vatten. Zoom uit om de waarde van je werk te beoordelen, door je bijvoorbeeld de volgende vragen te stellen: 
-
-
-- Kunnen mijn resultaten gebruikt worden in het werkveld? 
-- Wat betekenen ze voor het werkveld? 
-- Zijn mijn data betrouwbaar? 
-
-Bespreek de resultaten zodanig dat je ze ter discussie stelt, wees kritisch. Vergelijk je resultaten met de literatuur of eerder ontwikkelde data. Geef aanbevelingen voor een vervolg en staaf je aanbevelingen door de impact op wetenschappelijk of maatschappelijk vlak te beschrijven. 
-
-Kom ten slotte altijd terug op de doelstelling (en hypothesen).
-
-Deze sectie bevat tussen de 400-800 woorden.
-
-
-# Online bijlagen
-Daniel Pastoor
-Vaak zijn online bijlagen vele malen groter dan het eigenlijke artikel. Wees nooit bang om te veel aan bijlagen aan te bieden. Je kan hierbij denken aan
-
-- de ruwe data
-- de code voor dataverwerking 
-- de code voor analyse
-- aanvullende figuren en tabellen
-
-Natuurlijk is een git(hub) repo daar de beste plek voor!
-Zorg ervoor de je repo logisch is ingericht met goede Readme document(en). 
-Ook de code zelf is waar nodig natuurlijk goed gedocumenteerd.
-
-## Wordcount
-
-Voeg aan het eind een woord-telling in:
-
-```{r wordcount, message=FALSE}
-wordcountaddin:::text_stats()
+knitr::kable(
+  data.frame(ANOVAtest, Pvalue), longtable = TRUE, booktabs = TRUE,
+  caption = 'P values for ANOVA testing the effects of sports and an athletic activity on men.'
+)
 ```
+```{r ANOVA women, fig.cap='P values for ANOVA testing the effects of sports and an athletic activity on women.'}
+Pvalue <- c()
+res_woman_sporting_activity <- summary(aov(Peak_flow ~ Sporting + Has_activity, data = data_breath_female))
+Pvalue[length(Pvalue)+1] <- unlist(res_woman_sporting_activity)['Pr(>F)1']
+Pvalue[length(Pvalue)+1] <- unlist(res_woman_sporting_activity)['Pr(>F)2']
 
-# Referenties
+ANOVAtest <- c("sporting women","activity by women")
 
-Een lijst van referenties wordt hier automagisch toegevoegd.
+data.frame(ANOVAtest, Pvalue)
+
+knitr::kable(
+  data.frame(ANOVAtest, Pvalue), longtable = TRUE, booktabs = TRUE,
+  caption = 'P values for ANOVA testing the effects of sports and an athletic activity on women.'
+)
+```
+Looking at sporting men with a P value of 0.07643009, there could be a effect on the data if men sport or not.
+# Discussions en Conclusions
+
+The results obtained from this experiment provide an insights into 
+the relationship between physical activity, exercise, and peak expiratory flow rate.
+
+As depicted in Figure \@ref(fig:female-box-plot) and figure \@ref(fig:male-box-plot), the data suggests a 
+clear association between the physical activity and a higher peak expiratory flow rate. 
+
+Looking deeper into the results, it becomes clear that there is a significant 
+difference in peak expiratory flow rate between males who exercise and those who do not, 
+particularly following the completion of 10 jumping jacks.
+The statistical significance of this difference was viewed by the ANOVA test (table \@ref(tab:ANOVA)), 
+which yielded a p-value below the commonly accepted threshold of 0.05.
+
+In contrast, the analysis revealed no significant difference in peak expiratory 
+flow rate between females who exercise and males who do not exercise, both before 
+and after the 10 jumping jacks. The only thing we found is that the peak expiratory flow rate can be lower after
+10 jumping jacks. These findings suggest that gender may play a role 
+in the relationship between exercise and peak expiratory flow rate. 
+
+It is important to acknowledge the limitations of this experiment, as they may affect the reliability
+of the results. Firstly, the relatively small data set used in the analysis limits the 
+statistical result of the findings. Additionally, the measurement of peak expiratory 
+flow rate relied on visual observation, introducing potential subjectivity and measurement errors. 
+The rounding off of recorded values further diminishes the precision and accuracy of the results. 
+Also not every person handled the peak flow device the samen.
+
+In summary, while the results of this experiment provide valuable insights, 
+they should be interpreted with caution due to the limitations discussed.
+But the result determine that there is a relation between sporting and peak expiratory flow rate.
+
+# Online attachments
+For attachments follow the link below to the github repository of this experiment:
+
+https://github.com/danielpastoor/breathing_peak_flow
+
+# References
+
+
