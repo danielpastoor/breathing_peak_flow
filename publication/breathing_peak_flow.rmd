@@ -25,6 +25,8 @@ output:
 ```{r setup, message=FALSE, warning=FALSE, include=FALSE}
 knitr::opts_chunk$set(out.width = '100%', dpi=300) # configuratie voor figuur grootte en resolutie
 knitr::opts_chunk$set(echo = FALSE) # Deze regel zorgt ervoor GEEN ENKELE chunk getoond wordt! 
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_knit$set(eval.after = "fig.cap")
 # Laad alle gebruikte bibliotheken hier
 library(ggplot2)
 library(dplyr)
@@ -112,31 +114,35 @@ The ANOVA (Analysis Of Variance)  test was performed on the factors sport, sex a
 De resultaten van het onderzoek naar de breathing peak flow bij mannen en vrouwen 
 die de oefeningen doen voor en na het uitvoeren van 10 jumping jacks worden 
 gepresenteerd aan de hand van de volgende boxplots en histogrammen. De boxplots tonen de verdeling van 
-de breathing peak flow in de verschillende groepen. Figuur 1 toont de boxplots 
+de breathing peak flow in de verschillende groepen. Figuur \@ref(fig:female-box-plot) toont de boxplots 
 van de piekstroom bij vrouwen die oefeningen doen voor en na de jumping jacks. 
 
-```{r female-box-plot, fig.align='center'}
+```{r female-box-plot, fig.align='center', fig.width="50%", fig.cap='Box plot with the peak flow rate in females that do exercise before performing 10 jumping jacks'}
 #Boxplots of peak flow rate in females that do exercise before and after jumping jacks
 
 ggplot(data = data_breath_female,
-       mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
+       mapping = aes(x = Sex, y = Peak_flow)) +
   geom_boxplot() +
   facet_wrap(~ Has_activity_label + Sporting_label) +
   stat_summary(fun = "mean", geom = "point",
-               color = "gold") + xlab("Peak flow rate in females that do exercise before performing 10 jumping jacks")
+               color = "gold")  + 
+  xlab("Sex") +
+  ylab("Breathing peak flow rate in L/m")
 ```
 
-Figuur 2 toont de boxplots van de piekstroom bij mannen die oefeningen doen 
+Figure \@ref(fig:male-box-plot) toont de boxplots van de piekstroom bij mannen die oefeningen doen 
 voor en na de jumping jacks.
 
-```{r male-box-plot, fig.align='center'}
+```{r male-box-plot, fig.align='center', fig.width="50%", fig.cap='Box plot with the peak flow rate in males that do exercise before performing 10 jumping jacks'}
 
 ggplot(data = data_breath_male,
-       mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
+       mapping = aes(x = Sex, y = Peak_flow)) +
   geom_boxplot() +
   facet_wrap(~ Has_activity_label + Sporting_label) +
   stat_summary(fun = "mean", geom = "point",
-               color = "gold") + xlab("Peak flow rate in males that do exercise before performing 10 jumping jacks")
+               color = "gold") + 
+  xlab("Sex") +
+  ylab("Breathing peak flow rate in L/m")
 
 ```
 
@@ -149,10 +155,11 @@ een positief effect kan hebben op de ademhalingsfunctie.
 
 Om verder inzicht te krijgen in de invloed van sport op de ademhalingsfunctie, 
 zijn histogrammen gemaakt om de verdeling van de breathing peak flow te visualiseren 
-bij mensen die wel en niet sporten. Figuur 3 toont het histogram van de piekstroom 
+bij mensen die wel en niet sporten. Figure \@ref(fig:sporting-histograms) toont het histogram van de piekstroom 
 bij mensen die sporten, waarbij de gegevens zijn gegroepeerd op basis van sex. 
 
-```{r sporting-histograms, warning=FALSE, fig.cap='A histogram plotted from a data collection with the filter if the person sport grouped by sex'}
+
+```{r sporting-histograms,  warning=FALSE, fig.width="50%", fig.cap=paste('A histogram plotted from a data collection with the filter if the person sport and grouped by sex with a ', pvalue_label) }
 data_sporting <- data_breath %>% filter(Sporting == T)
 
 pvalue <- t.test((data_sporting %>% filter(Sex == "Woman"))$Peak_flow, 
@@ -165,20 +172,23 @@ ggplot(data = data_sporting) +
        labs(fill='Sex',
             x = "Breathing peak flow rate in L/m")
             
-pvalue
+pvalue_label<- ""
 
+if (pvalue < 0.01){
+  pvalue_label <- "P < 0.01"
+} else {
+  pvalue_label <- paste("P is ", pvalue)
+}
 ```
 
-Figuur 4 toont het histogram van de piekstroom bij mensen die niet sporten, ook 
+Fugure \@ref(fig:no-sporting-histograms) toont het histogram van de piekstroom bij mensen die niet sporten, ook 
 gegroepeerd op basis van geslacht.
 
-```{r no-sporting-histograms, warning=FALSE, fig.cap='A histogram plotted from a data collection with the filter if the person does not sport grouped by sex'}
+```{r no-sporting-histograms, warning=FALSE, fig.width="50%", fig.cap=paste('A histogram plotted from a data collection with the filter if the person does not sport and grouped by sex with a ', pvalue_label)}
 data_not_sporting <- data_breath %>% filter(Sporting == F)
 
 pvalue <- t.test((data_not_sporting %>% filter(Sex == "Woman"))$Peak_flow, 
 y = (data_not_sporting %>% filter(Sex == "Man"))$Peak_flow)$p.value
-
-#verschil tussen de verschillende sexsen', fig.cap='T-test of er een verschil in peakflow zit bij mannen en bij vrouwen'
 
 # histogram of people that do not sport
 ggplot(data = data_not_sporting) +
@@ -187,6 +197,14 @@ ggplot(data = data_not_sporting) +
        labs(fill='Sex',
             x = "Breathing peak flow rate in L/m",
        alt = "A histogram plotted from a data collection with the filter if the person does not sport grouped by sex")
+
+pvalue_label<- ""
+
+if (pvalue < 0.01){
+  pvalue_label <- "P < 0.01"
+} else {
+  pvalue_label <- paste("P is ", pvalue)
+}
 ```
 
 Als er dichter wordt gekeken naar de histogrammen blijkt dat bij zowel mannen als vrouwen die sporten, 
@@ -210,43 +228,41 @@ inzicht bieden in het verband tussen lichaamsbeweging en ademhalingsfunctie.
 
 ### Zijn de datasets normaalverdeeld?
 Bij de data worden de testen gedaan op kleinere datasets. De gemeten peak flow wordt hierin verdeeld in de verschillende sexse: man en vrouw. Deze worden vervolgens verdeeld in personen die wel en die niet sporten. Waarbij elk van deze groep weer wordt verdeeld in de gemeten peak flow voor en na de jumping jacks.
-```{r normaal_verdeling_van_data, fig.cap='Per verschillende groep de p-value bij een Shapiro-Wilk test'}
-data_breath %>% 
+[Table \@ref(tab:normal-distribution-of-data)] hieruit kan worden gehaald dat alle mogelijke combinaties een p-value boven de 0.05 hebben, en dus normaal verdeeld zijn.
+```{r normal-distribution-of-data, fig.cap='Per different group the p-value in a Shapiro-Wilk test.'}
+knitr::kable(
+  data_breath %>% 
   group_by(Sex, Has_activity, Sporting) %>%
   summarise(Pvalue = shapiro.test(Peak_flow)$p.value, 
             group_size = n(),
             .groups = 'keep')%>%
-  select(Has_activity, Sex, Sporting, Pvalue)
+  select(Has_activity, Sex, Sporting, Pvalue), longtable = TRUE, booktabs = TRUE,
+  caption = 'Per different group the p-value in a Shapiro-Wilk test.'
+)
 ```
-Hieruit kan worden gehaald dat alle mogelijke combinaties een p-value boven de 0.05 hebben, en dus normaal verdeeld zijn.
-
-###### dit moet ff naar de histogram
-```{r verschillende t-testen}
-#t.test(normaal_verd_ajj$Peak_flow, y= normaal_verd_bjj$Peak_flow, alternative ="two.sided", paired = TRUE)
-```
-
-De p-waard is 6.102e-11 dit betekent zoals eerder was benoemdt dat er een significant verschil aanwezig is tussen de peakflow van de mannen en vrouwen.
 
 ### Zit er een verschil in peakflow tussen de verschillende groepen voor en na 10 jumping jacks?
-Hiernaast wordt er gekeken of er verschillen zitten in de peakflow bij de verschillende groepen voor en na 10 jumping jacks.
-```{r verschillende_t.test_op_groepen, fig.cap='De verschillende p-values van de t-testen bij de verschillende groepen voor en na 10 jumping'}
- data_breath %>%
+Hiernaast wordt er gekeken of er verschillen zitten in de peakflow bij de verschillende groepen voor en na 10 jumping jacks Table [\@ref(tab:different-t-test-on-groups)]
+```{r different-t-test-on-groups, fig.cap='The different p-values of the t-tests among the different groups before and after 10 jumps'}
+knitr::kable( 
+data_breath %>%
   group_by(Sex, Has_activity, Sporting) %>%
   select(-Has_activity_label) %>%
   pivot_wider(names_from = Has_activity, values_from = Peak_flow) %>%
   summarise(Pvalue = t.test(x = True,y= False, alternative = "two.sided", paired = TRUE)$p.value, 
            group_size = n(),
           .groups = 'keep')%>%
- select(Sex, Sporting, Pvalue)
-
+ select(Sex, Sporting, Pvalue), longtable = TRUE, booktabs = TRUE,
+  caption = 'The different p-values of the t-tests among the different groups before and after 10 jumps.'
+)
 ```
 Bij mannen die wel en niet sporten is er geen significant verschil in de peakflow voor de 10 jumping jacks en na de 10 jumping jacks.
 Bij brouwen die wel en niet sporten er er wel een significant verschil in de peakflow voor de 10 jumping jacks en na de 1 jumping jacks.
 
 ### Is er een effect van de factoren: sportende, uitvoering van kleine sportieve activiteit en geslacht op de gemeten peak flow?
 
-Doormiddel van een ANOVA test wordt de effect van de factoren: sexsen, of de persoon sport en de uitvoering van een kleine sportieve activiteit.
-```{r ANOVA, fig.cap='P values voor ANOVA testen van de effecten van sporten, een sportieve activiteit en het geslacht. '}
+Doormiddel van een ANOVA test wordt de effect van de factoren: sexsen, of de persoon sport en de uitvoering van een kleine sportieve activiteit.Table [\@ref(tab:ANOVA)]
+```{r ANOVA, fig.cap='P values for ANOVA testing the effects of sports, an athletic activity and gender.'}
 pvalue <- c()
 
 res_sex_sporting_activity <- summary(aov(Peak_flow ~ Sex + Sporting + Has_activity, data = data_breath))
@@ -257,15 +273,14 @@ pvalue[length(pvalue)+1] <- unlist(res_man_sporting_activity)['Pr(>F)1']
 
 res_woman_sporting_activity <- summary(aov(Peak_flow ~ Sporting + Has_activity, data = data_breath_female))
 pvalue[length(pvalue)+1] <- unlist(res_woman_sporting_activity)['Pr(>F)1']
-Soort_variable <- c("sport + geslacht + activiteit", "sport + activiteit bij mannen", "sport + activiteit bij vrouwen")
+Soort_variable <- c("sport + sex + activity", "sport + activity in men", "sport + activity in women")
 
-data.frame(Soort_variable, pvalue)
+knitr::kable(
+  data.frame(Soort_variable, pvalue), longtable = TRUE, booktabs = TRUE,
+  caption = 'P values for ANOVA testing the effects of sports, an athletic activity and gender.'
+)
 ```
 Bij de test waar de factoren: sport, geslacht en activiteit zijn behandeld, is een p-value van 5.046752e-11. Dit betekent dat er een effect van geslacht op de peakflow zit. Daarbij zijn er apparte testen afgenomen om het effect los van het geslacht te bekijken. Maar deze is niet aanwezig.
-
-Geef tabellen bovenaan een titel en bijschrift die de inhoud beschrijft en onderaan voetnoten die kolomnamen of specifieke waardes verklaren.
-
-Deze sectie bevat tussen de 600-1200 woorden.
 
 
 # Discussie en Conclusies
