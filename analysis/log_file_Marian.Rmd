@@ -1,0 +1,205 @@
+---
+title: "Marian_log_file"
+author: "Marian Hasan"
+date: "2023-05-15"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+```
+
+## Preliminaries
+This research was carried out in the months May-July, 2023.
+
+## Introduction
+Patient data were collected at out institute
+
+##  Goal
+Determine wether or not sports/working out has an influence on the peak flow rate of male and female students.
+
+## Data collection
+Subjects were asked to deeply inhale and exhale 3 times and let out the 3rd exhale in the device to measure the peak flow rate. They were then asked to perform 10 jumping jacks and measure the peak flow rate again.
+
+## Theory
+The purpose of this experiment was to determine whether or not sports/working out influences the peak flow rate of students. The peak flow rate is the maximum rate of airflow that a person can exhale and is measured in liters per minute. A healthy peak flow rate lies between 400 and 600 liters per minute. A peak flow rate between 200 and 400 liters per minute can indicate asthma. The peak flow rate is measured using a spirometer. 
+
+Previous research has proven that exercising can increase one's peak flow rate. In this experiment an attempt to prove this will be done by measuring the peak flow rates of subjects before and after performing 10 jumping jacks. The subjects will be categorized in subjects that participate in sports/work out and subjects that don’t. 
+
+## Experimental work
+### 11-05-23
+Measured peak flow with spirometer at the zernike campus
+
+
+### 13-05-23
+Measured peak flow with spirometer at the zernike campus
+
+### 17-05-23
+Started with data processing the data
+
+### 22-05-23
+Continued processing data
+
+### 23-05-23
+Finishing off processing data
+
+
+### 24-05-23
+Made boxplots out of all the data, code can be seen below
+
+
+### 31-05-23
+Created title for the paper with Daniël
+
+
+### 01-06-23
+Worked on paper and discussed the plan for the upcoming days 
+
+
+### 02-06-23
+Worked on paper, changed boxplots
+
+
+
+
+
+### Code
+```{r data-reading, echo=FALSE}
+data_file <- "C:/Users/Maria/OneDrive/Music/Documents/bioinf/W cyclus/breathing_peak_flow/raw_data/Data_breath.csv"
+
+
+#data format: Subject_id,Sport,Sport_times,Age,Length,Weight,Sex,Peak_flow,Has_activity,Device_number
+data_breath <- read.table(file = data_file,
+                        header = TRUE,
+                        sep = ",")
+```
+
+```{r data-verwerk, echo=FALSE}
+# get mean of the 2 different data points
+data_breath_diff <- data_breath %>% group_by(Subject_id) %>% mutate(Diff_peak_flow = Peak_flow[2] - Peak_flow[1])
+
+data_breath <-  data_breath %>%
+  mutate( Sporting = case_when(Sport == "None" ~ F, .default = T))
+
+```
+
+```{r sampling-demo, fig.asp=.6, out.width='60%', fig.align='center', echo=FALSE}
+library(dplyr)
+
+# Marian
+#Boxplots of peak flow rate in females that don't exercise before and after jumping jacks
+females_n <- data_breath %>%
+  filter(Sex == "Woman", Sport == "None")
+
+before_jj_nf <- females_n[c(rep(TRUE,1),FALSE), ]
+
+
+after_jj_nf <- females_n[c(rep(FALSE,1),TRUE), ]
+
+
+
+ggplot(data = before_jj_nf, 
+       mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
+  geom_boxplot() + 
+  stat_summary(fun = "mean", geom = "point",
+               color = "gold") + xlab("Peak flow rate in females that don't exercise before performing 10 jumping jacks")
+
+
+ggplot(data = after_jj_nf,
+       mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
+      geom_boxplot() +
+      stat_summary(fun = "mean", geom = "point",
+               color = "gold") +  xlab("Peak flow rate in females that don't exercise after performing 10 jumping jacks")
+
+
+#Boxplots of peak flow rate in females that do exercise before and after jumping jacks
+
+females_y <- data_breath %>%
+  filter(Sex == "Woman", Sport != "None")
+
+
+
+before_jj_yf <- females_y[c(rep(TRUE,1),FALSE), ]
+
+
+after_jj_yf <- females_y[c(rep(FALSE,1),TRUE), ]
+
+
+
+ggplot(data = before_jj_yf,
+       mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
+  geom_boxplot() +
+  stat_summary(fun = "mean", geom = "point",
+               color = "gold") + xlab("Peak flow rate in females that do exercise before performing 10 jumping jacks")
+
+
+ggplot(data = after_jj_yf,
+       mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
+      geom_boxplot() +
+      stat_summary(fun = "mean", geom = "point",
+               color = "gold") +  xlab("Peak flow rate in females that do exercise after performing 10 jumping jacks")
+
+
+
+
+#Boxplots of peak flow rate in males that don't exercise before and after jumping jacks
+males_n <- data_breath %>%
+  filter(Sex == "Man", Sport == "None")
+
+before_jj_nm <- males_n[c(rep(TRUE,1),FALSE), ]
+
+
+after_jj_nm <- males_n[c(rep(FALSE,1),TRUE), ]
+
+
+
+ggplot(data = before_jj_nm,
+       mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
+  geom_boxplot() +
+  stat_summary(fun = "mean", geom = "point",
+               color = "gold") + xlab("Peak flow rate in females that don't exercise before performing 10 jumping jacks")
+
+
+ggplot(data = after_jj_nm,
+       mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
+      geom_boxplot() +
+      stat_summary(fun = "mean", geom = "point",
+               color = "gold") +  xlab("Peak flow rate in males that don't exercise after performing 10 jumping jacks")
+
+
+#Boxplots of peak flow rate in males that do exercise before and after jumping jacks
+males_n <- data_breath %>%
+  filter(Sex == "Man", Sport != "None")
+
+before_jj_ym <- males_n[c(rep(TRUE,1),FALSE), ]
+
+
+after_jj_ym <- males_n[c(rep(FALSE,1),TRUE), ]
+
+
+
+ggplot(data = before_jj_ym,
+       mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
+  geom_boxplot() +
+  stat_summary(fun = "mean", geom = "point",
+               color = "gold") + xlab("Peak flow rate in females that do exercise before performing 10 jumping jacks")
+
+
+ggplot(data = after_jj_ym,
+       mapping = aes(x = Sex, y = Peak_flow, color = Sex)) +
+      geom_boxplot() +
+      stat_summary(fun = "mean", geom = "point",
+               color = "gold") +  xlab("Peak flow rate in males that do exercise after performing 10 jumping jacks")
+
+```
+
+
+
+
+
+
+
