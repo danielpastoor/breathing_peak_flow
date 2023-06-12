@@ -1,16 +1,18 @@
 ---
-title: Breathing peak Flow # Geef je paper een naam die prikkelt, informatief is, en zo kort mogelijk
+title: Physical activity causes significant effect on peak expiratory flow rate in students at the Hanze University
 authors: "<Daniël: 452871, Larissa: 432995 en Marian:446030 >"
 author: |
-  | Daniël Pastoor $^1$, Larissa Voshol Feenstra $^1$, Marian Hasan $^1$
+  | Daniël Pastoor $^1$, Larissa Voshol $^1$, Marian Hasan $^1$
   | $^1$Hanzehogeschool
 
 lang: en
 
 abstract: |
-  Geef hier je samenvatting in maximaal 150 woorden. Het is een samenvatting van het hele artikel; niet alleen de resultaten! Begin met het belang van dit onderzoek, dan hoe het onderzoek is aangepakt en de belangrijkste resultaten en eindig met de implicaties ervan voor de wetenschap/de maatschappij. Neem nooit figuren of tabellen op in de samenvatting.
+ |  For this experiment the peak expiratory flow rate in students at Hanzehogeschool was measured to determine whether or not exercising has a significant effect on one’s peak expiratory flow rate. The peak expiratory flow rate (peak expiratory flow rate) can indicate a patient's ventilation adequacy.
+ | Results suggested that exercising does in fact lead to a significant increase of one’s peak expiratory flow rate. These findings could possibly offer a solution for patients suffering from shortness of breath. This would mean these patients would no longer have to rely on medicine to treat their shortness of breath. If there is no longer need for these medicines this would also reduce the costs of asthma care.
 
-bibliography: breathing_peak_flow.bib # naam van je .bib file. Deze moet hetzelfde zijn als je Rmd bestandsnaam
+
+bibliography: breathing_peak_flow.bib 
 
 output:
   bookdown::pdf_document2:
@@ -70,13 +72,13 @@ data_breath_female <- data_breath %>%
 
 Asthma is a chronic lung disease that causes the airways to be constantly inflamed. The disease can occur at any age but is mostly present in children and adolescents. Approximately 600.000 people in the Netherlands suffer from asthma, of which 80.000 are children.
 In the year 2019 alone, the Dutch government has spent nearly 444 billion euros on asthma care. From this 444 billion euros, 40 percent was spent on medication. One of the symptoms of asthma that requires medical aid is shortness of breath, which is caused by the narrowing of the airways due to muscle tightening or inflammation. 
-Research has proven that exercising can improve asthma control in patients, but that it has little to no effect on one's peak expiratory flow rate  (PEFR). 
-The PEFR is the maximum rate of airflow that a person can forcefully exhale. The PEFR can reliably indicate the adequacy of someone’s ventilation and whether or not someone suffers from airflow obstruction.
-This experiment was conducted out of pure curiosity. However, if exercising does turn out to significantly increase one’s PEFR, and dilate their airways, it could help reduce shortness of breath in patients thereby reducing the costs of asthma care.
-A healthy PEFR ranges between 400 and 600 litres per minute. A PEFR between 200 and 400 litres per minute can indicate asthma.
-A healthy PEFR varies from person to person and is also influenced by factors such as sex, age and height. The PEFR tends to be higher in males and taller people compared  to females and shorter people. The PEFR is measured using a Peak Flow Meter, a small device with a scale ranging from 50 L/min to 800 L/min. 
-This paper aims to assess whether or not exercising can increase one’s PEFR. Additionally it will examine the effects of several factors on the PEFR.
-To conduct this experiment the PEFR of students from the Hanze University  were measured using a Peak Flow Meter. These students were divided by sex and whether or not they participated in sports. Their PEFR’s were measured before and after asking them to perform 10 jumping jacks. 
+Research has proven that exercising can improve asthma control in patients, but that it has little to no effect on one's peak expiratory flow rate. 
+The peak expiratory flow rate is the maximum rate of airflow that a person can forcefully exhale. The peak expiratory flow rate can reliably indicate the adequacy of someone’s ventilation and whether or not someone suffers from airflow obstruction.
+This experiment was conducted out of pure curiosity. However, if exercising does turn out to significantly increase one’s peak expiratory flow rate, and dilate their airways, it could help reduce shortness of breath in patients thereby reducing the costs of asthma care.
+A healthy peak expiratory flow rate ranges between 400 and 600 litres per minute. A peak expiratory flow rate between 200 and 400 litres per minute can indicate asthma.
+A healthy peak expiratory flow rate varies from person to person and is also influenced by factors such as sex, age and height. The peak expiratory flow rate tends to be higher in males and taller people compared  to females and shorter people. The peak expiratory flow rate is measured using a Peak Flow Meter, a small device with a scale ranging from 50 L/min to 800 L/min. 
+This paper aims to assess whether or not exercising can increase one’s peak expiratory flow rate. Additionally it will examine the effects of several factors on the peak expiratory flow rate.
+To conduct this experiment the peak expiratory flow rate of students from the Hanze University  were measured using a Peak Flow Meter. These students were divided by sex and whether or not they participated in sports. Their peak expiratory flow rate’s were measured before and after asking them to perform 10 jumping jacks. 
 
 
 # Materials and methods
@@ -111,11 +113,10 @@ The ANOVA (Analysis Of Variance)  test was performed on the factors sport, sex a
 
 # Resultaten
 
-De resultaten van het onderzoek naar de breathing peak flow bij mannen en vrouwen 
-die de oefeningen doen voor en na het uitvoeren van 10 jumping jacks worden 
-gepresenteerd aan de hand van de volgende boxplots en histogrammen. De boxplots tonen de verdeling van 
-de breathing peak flow in de verschillende groepen. Figuur \@ref(fig:female-box-plot) toont de boxplots 
-van de piekstroom bij vrouwen die oefeningen doen voor en na de jumping jacks. 
+The collected results of this experiment are first visualised in the following order of boxplots, histograms and table result of our test.
+The discuss of the distribution on the peak expiratory flow rate in the boxplots with the different groups (males,females, exercise, no exercise, before jumping jacks and after 10 jumping jacks).
+
+Figure \@ref(fig:female-box-plot) shows the peak expiratory flow rate in females that exercise before and after performing 10 jumping jacks this visualised using a boxplot where it is also split by if the female sport or not.
 
 ```{r female-box-plot, fig.align='center', fig.width="50%", fig.cap='Box plot with the peak flow rate in females that do exercise before performing 10 jumping jacks'}
 #Boxplots of peak flow rate in females that do exercise before and after jumping jacks
@@ -125,39 +126,31 @@ ggplot(data = data_breath_female,
   geom_boxplot() +
   facet_wrap(~ Has_activity_label + Sporting_label) +
   stat_summary(fun = "mean", geom = "point",
-               color = "gold")  + 
+               color = "gold")  +
   xlab("Sex") +
   ylab("Breathing peak flow rate in L/m")
 ```
 
-Figure \@ref(fig:male-box-plot) toont de boxplots van de piekstroom bij mannen die oefeningen doen 
-voor en na de jumping jacks.
+Figure \@ref(fig:male-box-plot) shows the peak expiratory flow rate in males that exercise before and after performing 10 jumping jacks this visualised using a boxplot where it is also split by if the male sport or not.
 
 ```{r male-box-plot, fig.align='center', fig.width="50%", fig.cap='Box plot with the peak flow rate in males that do exercise before performing 10 jumping jacks'}
+#Boxplots of peak flow rate in male that do exercise before and after jumping jacks
 
 ggplot(data = data_breath_male,
        mapping = aes(x = Sex, y = Peak_flow)) +
   geom_boxplot() +
   facet_wrap(~ Has_activity_label + Sporting_label) +
   stat_summary(fun = "mean", geom = "point",
-               color = "gold") + 
+               color = "gold") +
   xlab("Sex") +
   ylab("Breathing peak flow rate in L/m")
-
 ```
 
 
-Uit de boxplots blijkt het dat bij zowel mannen als vrouwen de gemiddelde 
-piekstroom hoger is na het uitvoeren van de jumping jacks in vergelijking met daarvoor. 
-Dit kan worden afgeleid uit de punten die de gemiddelde waarden weergeven, 
-die hoger liggen na de jumping jacks. Deze observatie kan suggereren de beoevening van een sport zoals bij ons de jumping jacks 
-een positief effect kan hebben op de ademhalingsfunctie.
+The boxplots visualised above [Figure \@ref(fig:female-box-plot) & Figure \@ref(fig:male-box-plot)] shows that for both males and females the mean of the peak expiratory flow rate is higher after performing the 10 jumping jacks compared to it before. 
 
-Om verder inzicht te krijgen in de invloed van sport op de ademhalingsfunctie, 
-zijn histogrammen gemaakt om de verdeling van de breathing peak flow te visualiseren 
-bij mensen die wel en niet sporten. Figure \@ref(fig:sporting-histograms) toont het histogram van de piekstroom 
-bij mensen die sporten, waarbij de gegevens zijn gegroepeerd op basis van sex. 
-
+To get further insight on the effects of exercising on the peak expiratory flow rate, these following histograms were made to show the distribution of the peak expiratory flow rate in subjects that exercise and do not exercise.
+The histogram in figure \@ref(fig:sporting-histograms) shows the peak expiratory flow rate in students that exercised grouped by their sex.
 
 ```{r sporting-histograms,  warning=FALSE, fig.width="50%", fig.cap=paste('A histogram plotted from a data collection with the filter if the person sport and grouped by sex with a ', pvalue_label) }
 data_sporting <- data_breath %>% filter(Sporting == T)
@@ -181,8 +174,9 @@ if (pvalue < 0.01){
 }
 ```
 
-Fugure \@ref(fig:no-sporting-histograms) toont het histogram van de piekstroom bij mensen die niet sporten, ook 
-gegroepeerd op basis van geslacht.
+These following histograms were made to show the distribution to get further insight on the effects of exercising on the peak expiratory flow rate
+The histogram in figure \@ref(fig:no-sporting-histograms) shows the peak expiratory flow rate in students that don’t exercise, grouped by sex.
+
 
 ```{r no-sporting-histograms, warning=FALSE, fig.width="50%", fig.cap=paste('A histogram plotted from a data collection with the filter if the person does not sport and grouped by sex with a ', pvalue_label)}
 data_not_sporting <- data_breath %>% filter(Sporting == F)
@@ -207,28 +201,20 @@ if (pvalue < 0.01){
 }
 ```
 
-Als er dichter wordt gekeken naar de histogrammen blijkt dat bij zowel mannen als vrouwen die sporten, 
-de breathing peak flow over het algemeen hoger zijn in vergelijking met mensen 
-die niet sporten. Dit kan suggereren dat regelmatige lichaamsbeweging een positieve 
-invloed kan hebben op de ademhalingsfunctie. Bovendien is te zien dat bij 
-zowel mannen als vrouwen de verdeling van de breathing peak flow hoger is 
-bij mensen die sporten in vergelijking met degenen die niet sporten. Waarbij je 
-ook ziet dat de breathing peak flow lager is bij mensen die niet sporten na jumping jacks.
+The histograms of males and females that exercise show a higher peak expiratory flow rate compared to males and females that don’t exercise. 
+Furthermore, the difference between the peak expiratory flow rate before and after jumping jacks seems to be  higher in males and females that exercise than in males and females that don’t.
 
-De resultaten van dit onderzoek laten zien dat het doen van jumping jacks een 
-positief effect kan hebben op de ademhalingsfunctie, aangezien de gemiddelde 
-breathing peak flow waarde hoger is na het uitvoeren van de oefening. Daarbij tonen 
-de histogrammen aan dat mensen die regelmatig sporten over het algemeen hogere 
-breathing peak flow hebben in vergelijking met mensen die niet sporten. 
-Deze bevindingen kan suggereren dat regelmatige lichaamsbeweging gunstig kan 
-zijn voor de ademhalingsfunctie. Het is belangrijk om op te merken dat de 
-resultaten gebaseerd zijn op een kleine data set. Waarbij wij geen mensen met asma hebben gemeten. 
-Verder zou een groter onderzoek met een grotere steekproef en controle van andere relevante variabelen kan meer 
-inzicht bieden in het verband tussen lichaamsbeweging en ademhalingsfunctie.
+Another observation is that the peak expiratory flow rate in males and females that don’t exercise seems to be lower after performing jumping jacks.
 
-### Zijn de datasets normaalverdeeld?
-Bij de data worden de testen gedaan op kleinere datasets. De gemeten peak flow wordt hierin verdeeld in de verschillende sexse: man en vrouw. Deze worden vervolgens verdeeld in personen die wel en die niet sporten. Waarbij elk van deze groep weer wordt verdeeld in de gemeten peak flow voor en na de jumping jacks.
-[Table \@ref(tab:normal-distribution-of-data)] hieruit kan worden gehaald dat alle mogelijke combinaties een p-value boven de 0.05 hebben, en dus normaal verdeeld zijn.
+
+To determine whether or not these observations were significant, several t-tests have been performed on the data.
+
+T-tests can only be performed on data that is normally distributed. To determine whether or not the data is normally distributed a Shapiro-Wilk test was performed. 
+To do this the data has been divided into smaller separate datasets. 
+The peak expiratory flow rate’s have first been grouped by sex. 
+Then the sexes have been further grouped by whether or not they exercise, 
+and the peak expiratory flow rate’s before and after performing jumping jacks.[Table \@ref(tab:normal-distribution-of-data)] 
+
 ```{r normal-distribution-of-data, fig.cap='Per different group the p-value in a Shapiro-Wilk test.'}
 knitr::kable(
   data_breath %>% 
@@ -241,8 +227,11 @@ knitr::kable(
 )
 ```
 
-### Zit er een verschil in peakflow tussen de verschillende groepen voor en na 10 jumping jacks?
-Hiernaast wordt er gekeken of er verschillen zitten in de peakflow bij de verschillende groepen voor en na 10 jumping jacks Table [\@ref(tab:different-t-test-on-groups)]
+All the p-values are higher than 0.05 meaning that all the data is normally distributed.
+
+
+To determine if there was a significant difference in peak expiratory flow rate before and after 10 jumping jacks in the different groups, a two-sided t-test was performed. 
+[Table \@ref(tab:different-t-test-on-groups)]
 ```{r different-t-test-on-groups, fig.cap='The different p-values of the t-tests among the different groups before and after 10 jumps'}
 knitr::kable( 
 data_breath %>%
@@ -256,12 +245,19 @@ data_breath %>%
   caption = 'The different p-values of the t-tests among the different groups before and after 10 jumps.'
 )
 ```
-Bij mannen die wel en niet sporten is er geen significant verschil in de peakflow voor de 10 jumping jacks en na de 10 jumping jacks.
-Bij brouwen die wel en niet sporten er er wel een significant verschil in de peakflow voor de 10 jumping jacks en na de 1 jumping jacks.
 
-### Is er een effect van de factoren: sportende, uitvoering van kleine sportieve activiteit en geslacht op de gemeten peak flow?
+There is no significant difference in peak expiratory 
+flow rate before and after 10 jumping jacks in females
+that exercise and don not exercise. 
 
-Doormiddel van een ANOVA test wordt de effect van de factoren: sexsen, of de persoon sport en de uitvoering van een kleine sportieve activiteit.Table [\@ref(tab:ANOVA)]
+Males that exercise and do not exercise do
+show a significant difference in the peak expiratory flow rate
+before and after 10 jumping jacks. This is mostly because the sporting
+group of men did a fintess sport. 
+Also the flow rate resulted somethimes in a lower flow rate.
+
+
+To determine whether or not the factors exercise, jumping jacks and sex had a significant effect on the peak expiratory flow rate an ANOVA test was performed. [Table \@ref(tab:ANOVA)]
 ```{r ANOVA, fig.cap='P values for ANOVA testing the effects of sports, an athletic activity and gender.'}
 pvalue <- c()
 
@@ -280,24 +276,39 @@ knitr::kable(
   caption = 'P values for ANOVA testing the effects of sports, an athletic activity and gender.'
 )
 ```
-Bij de test waar de factoren: sport, geslacht en activiteit zijn behandeld, is een p-value van 5.046752e-11. Dit betekent dat er een effect van geslacht op de peakflow zit. Daarbij zijn er apparte testen afgenomen om het effect los van het geslacht te bekijken. Maar deze is niet aanwezig.
-
+In the factors exercise, among the various factors considered, namely sex and physical activity, it was found that sex exhibited a remarkably significant difference. 
+The statistical analysis revealed a p-value of 5.046752e-11, further emphasizing the significance of this disparity.
 
 # Discussie en Conclusies
-Gezamelijk hand ik hand
-Formuleer je conclusie door eerst in te zoomen op je eigen data en daarna uit te zoomen. Zoom in door je resultaten samen te vatten. Zoom uit om de waarde van je werk te beoordelen, door je bijvoorbeeld de volgende vragen te stellen: 
 
+The results obtained from this experiment provide an insights into 
+the relationship between physical activity, exercise, and peak expiratory flow rate.
 
-- Kunnen mijn resultaten gebruikt worden in het werkveld? 
-- Wat betekenen ze voor het werkveld? 
-- Zijn mijn data betrouwbaar? 
+As depicted in Figure \@ref(fig:female-box-plot) and figure \@ref(fig:male-box-plot), the data suggests a 
+clear association between the physical activity and a higher peak expiratory flow rate. 
 
-Bespreek de resultaten zodanig dat je ze ter discussie stelt, wees kritisch. Vergelijk je resultaten met de literatuur of eerder ontwikkelde data. Geef aanbevelingen voor een vervolg en staaf je aanbevelingen door de impact op wetenschappelijk of maatschappelijk vlak te beschrijven. 
+Looking deeper into the results, it becomes clear that there is a significant 
+difference in peak expiratory flow rate between males who exercise and those who do not, 
+particularly following the completion of 10 jumping jacks.
+The statistical significance of this difference was viewed by the ANOVA test (table \@ref(tab:ANOVA)), 
+which yielded a p-value below the commonly accepted threshold of 0.05.
 
-Kom ten slotte altijd terug op de doelstelling (en hypothesen).
+In contrast, the analysis revealed no significant difference in peak expiratory 
+flow rate between females who exercise and males who do not exercise, both before 
+and after the 10 jumping jacks. The only thing we found is that the peak expiratory flow rate can be lower after
+10 jumping jacks. These findings suggest that gender may play a role 
+in the relationship between exercise and peak expiratory flow rate. 
 
-Deze sectie bevat tussen de 400-800 woorden.
+It is important to acknowledge the limitations of this experiment, as they may affect the reliability
+of the results. Firstly, the relatively small data set used in the analysis limits the 
+statistical result of the findings. Additionally, the measurement of peak expiratory 
+flow rate relied on visual observation, introducing potential subjectivity and measurement errors. 
+The rounding off of recorded values further diminishes the precision and accuracy of the results. 
+Also not every person handled the peak flow device the samen.
 
+In summary, while the results of this experiment provide valuable insights, 
+they should be interpreted with caution due to the limitations discussed.
+But the result determine that there is a relation between sporting and peak expiratory flow rate.
 
 # Online bijlagen
 Daniel Pastoor
@@ -313,8 +324,6 @@ Zorg ervoor de je repo logisch is ingericht met goede Readme document(en).
 Ook de code zelf is waar nodig natuurlijk goed gedocumenteerd.
 
 ## Wordcount
-
-Voeg aan het eind een woord-telling in:
 
 ```{r wordcount, message=FALSE}
 wordcountaddin:::text_stats()
