@@ -269,8 +269,6 @@ Pvalue[length(Pvalue)+1] <- unlist(res_sex_sporting_activity)['Pr(>F)2']
 Pvalue[length(Pvalue)+1] <- unlist(res_sex_sporting_activity)['Pr(>F)3']
 ANOVAtest <- c("sport", "sex",  "activity")
 
-data.frame(ANOVAtest, Pvalue)
-
 knitr::kable(
   data.frame(ANOVAtest, Pvalue), longtable = TRUE, booktabs = TRUE,
   caption = 'P values of ANOVA-test on the effects of exercise, jumping jacks and sex.'
@@ -280,21 +278,19 @@ knitr::kable(
 The ANOVA-test calculated a p-value of 5.046752e-11 for the variable exercise which suggests that it has a significant effect on the peak expiratory flow rate.
 The variables sex and jumping jacks had p-values greater than 0.05, suggesting that they had no significant effect on the peak expiratory flow rate.
 
-```{r ANOVA men, fig.cap='P values of ANOVA-test on the effects of exercise and jumping jacks in males.'}
+```{r ANOVA-men, fig.cap='P values of ANOVA-test on the effects of exercise and jumping jacks in males.'}
 Pvalue <- c()
 res_man_sporting_activity <- summary(aov(Peak_flow ~ Sporting + Has_activity, data = data_breath_male))
 Pvalue[length(Pvalue)+1] <- unlist(res_man_sporting_activity)['Pr(>F)1']
 Pvalue[length(Pvalue)+1] <- unlist(res_man_sporting_activity)['Pr(>F)2']
 ANOVAtest <- c("sporting men",  "activity by men")
 
-data.frame(ANOVAtest, Pvalue)
-
 knitr::kable(
   data.frame(ANOVAtest, Pvalue), longtable = TRUE, booktabs = TRUE,
   caption = 'P values of ANOVA-test on the effects of exercise and jumping jacks in males.'
 )
 ```
-```{r ANOVA women, fig.cap='P values of ANOVA-test on the effects of exercise and jumping jacks in females.'}
+```{r ANOVA-women, fig.cap='P values of ANOVA-test on the effects of exercise and jumping jacks in females.'}
 Pvalue <- c()
 res_woman_sporting_activity <- summary(aov(Peak_flow ~ Sporting + Has_activity, data = data_breath_female))
 Pvalue[length(Pvalue)+1] <- unlist(res_woman_sporting_activity)['Pr(>F)1']
@@ -302,14 +298,12 @@ Pvalue[length(Pvalue)+1] <- unlist(res_woman_sporting_activity)['Pr(>F)2']
 
 ANOVAtest <- c("sporting women","activity by women")
 
-data.frame(ANOVAtest, Pvalue)
-
 knitr::kable(
   data.frame(ANOVAtest, Pvalue), longtable = TRUE, booktabs = TRUE,
   caption = 'P values of ANOVA-test on the effects of exercise and jumping jacks in females.'
 )
 ```
-The p-values from the ANOVA-tests displayed in table 4 and 5 all seem to be greater than 0.05, suggesting that none of these variables have a significant effect on the peak expiratory flow rate.
+The p-values from the ANOVA-tests displayed in table \@ref(tab:ANOVA-men) and table \@ref(tab:ANOVA-women) all seem to be greater than 0.05, suggesting that none of these variables have a significant effect on the peak expiratory flow rate.
 
 
 
@@ -318,9 +312,9 @@ The p-values from the ANOVA-tests displayed in table 4 and 5 all seem to be grea
 
 From the results that came out of the two-tailed paired t-test that was performed, it can be concluded that there is a significant difference in PEFR before and after performing 10 jumping jacks in males that exercise and males that don’t exercise. 
 There was no significant difference in PEFR  before and after performing 10 jumping jacks in females that exercise and females that don’t exercise.
-The ANOVA-test in table 3, which tested the effect of the variables exercise, jumping jacks and sex on the peak expiratory flow rate, calculated a p-value of 5.046752e-11 for the variable exercise. This suggests that exercise has a significant effect on the peak expiratory flow rate.
+The ANOVA-test in table \@ref(tab:ANOVA), which tested the effect of the variables exercise, jumping jacks and sex on the peak expiratory flow rate, calculated a p-value of 5.046752e-11 for the variable exercise. This suggests that exercise has a significant effect on the peak expiratory flow rate.
 The variables sex and jumping jacks had p-values greater than 0.05, suggesting that they had no significant effect on the peak expiratory flow rate.
-The ANOVA-tests in table 4 and 5 however, in which the effect of exercise and jumping jacks on the peak expiratory flow rate in males females was tested, showed that when the data is divided by sex there no longer seems to be a significant effect of exercise or jumping jacks on the peak expiratory flow rate. All the p-values were greater than 0.05.
+The ANOVA-tests in table \@ref(tab:ANOVA-men) and table \@ref(tab:ANOVA-women) however, in which the effect of exercise and jumping jacks on the peak expiratory flow rate in males females was tested, showed that when the data is divided by sex there no longer seems to be a significant effect of exercise or jumping jacks on the peak expiratory flow rate. All the p-values were greater than 0.05.
 In conclusion, exercise has a significant effect on the peak expiratory flow rate, however sex does seem to play a role in it.
 It is important to note that the findings of this experiment were based on a relatively  small data set in which individuals with asthma or other lung conditions were not included. Judging from the results of this experiment and the way the data was collected, the data is not reliable and thereby of no use in the workfield. The measurements for the peak expiratory flow rate were visually observed and the measurements were rounded off as well.  
 In addition to that there was no literature found that was relevant enough to this experiment that could be used to compare the data with. 
