@@ -310,8 +310,8 @@ The p-values from the ANOVA-tests displayed in table \@ref(tab:ANOVA-men) and ta
 
 # Discussion and conclusion
 
-From the results that came out of the two-tailed paired t-test that was performed, it can be concluded that there is a significant difference in PEFR before and after performing 10 jumping jacks in males that exercise and males that don’t exercise. 
-There was no significant difference in PEFR  before and after performing 10 jumping jacks in females that exercise and females that don’t exercise.
+From the results that came out of the two-tailed paired t-test that was performed, it can be concluded that there is a significant difference in peak expiratory flow rate before and after performing 10 jumping jacks in males that exercise and males that don’t exercise. 
+There was no significant difference in peak expiratory flow rate before and after performing 10 jumping jacks in females that exercise and females that don’t exercise.
 The ANOVA-test in table \@ref(tab:ANOVA), which tested the effect of the variables exercise, jumping jacks and sex on the peak expiratory flow rate, calculated a p-value of 5.046752e-11 for the variable exercise. This suggests that exercise has a significant effect on the peak expiratory flow rate.
 The variables sex and jumping jacks had p-values greater than 0.05, suggesting that they had no significant effect on the peak expiratory flow rate.
 The ANOVA-tests in table \@ref(tab:ANOVA-men) and table \@ref(tab:ANOVA-women) however, in which the effect of exercise and jumping jacks on the peak expiratory flow rate in males females was tested, showed that when the data is divided by sex there no longer seems to be a significant effect of exercise or jumping jacks on the peak expiratory flow rate. All the p-values were greater than 0.05.

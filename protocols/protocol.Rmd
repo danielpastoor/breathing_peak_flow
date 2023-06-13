@@ -1,0 +1,121 @@
+---
+title: Peak expiratory flow rate protocol
+authors: "<Daniël: 452871, Larissa: 432995 en Marian:446030 >"
+author: |
+  | Daniël Pastoor $^1$, Larissa Voshol $^1$, Marian Hasan $^1$
+  | $^1$Hanzehogeschool
+
+lang: en
+
+output:
+  bookdown::pdf_document2:
+    keep_tex: false    # set this to true if you want to investigate the generated tex
+    toc: false         # table of contents
+    fig_caption: true  # includes figure captions with numbering in output
+    includes:  
+        in_header: include_tex_header.tex #will include rules for linespacing and figure floating
+
+---
+
+```{r setup, message=FALSE, warning=FALSE, include=FALSE}
+knitr::opts_chunk$set(out.width = '100%', dpi=300) # configuratie voor figuur grootte en resolutie
+knitr::opts_chunk$set(echo = FALSE) # Deze regel zorgt ervoor GEEN ENKELE chunk getoond wordt! 
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_knit$set(eval.after = "fig.cap")
+```
+
+# Protocol
+
+## Protocol for measurement
+1. Explain our experiment and determine if the fits the criteria. 
+
+2. One person will ask for their basic information and write it down in the right column like: 
+
+2.1 Age 
+
+2.2 Length 
+
+2.3 Weight 
+
+2.4 Sex 
+
+2.5 Sport 
+
+2.6 Sport times 
+ 
+
+3. Measure the peak flow before an active workout.   
+How to measure with a spirometer: 
+
+3.1 The subject must inhale and exhale deeply 3 times. 
+
+3.2 After the 3rd inhale, the subject must place the spirometer inside their mouth and exhale until there is no air left in their lungs. 
+
+3.3 Both researchers will write down the number in the "Peak flow" column in their own excel file. 
+ 
+3.4 Rest 1 minute. 
+
+3.5 The subjects must now do 10 jumping jacks. 
+
+3.6 Repeat steps 4.1 – 4.3. 
+
+## Target audience: 
+
+18 to 25 year olds 
+
+Non smokers/vapers 
+
+No lung conditions 
+
+Sports: football, volleyball, gym, athletics 
+
+
+## Research group: 
+
+Males 
+
+Sports/ works out less than 1 time a week 
+
+Sports/ works out more than 1 time a week 
+
+ 
+
+Females
+
+Sports/ works out less than 1 time a week 
+
+Sports/ works out more than 1 time a week 
+
+ 
+
+## Supplies: 
+
+Peak Flow measure device 
+
+## Data processing: 
+
+The data will be processed using an excel sheet in which the following columns will be used: 
+
+ 
+
+Subject_id 		number 
+
+Labarant_id 		number 
+
+Sport			(football, volleyball, athletics, tennis, none) 
+
+Sport_frequency 
+
+Age  
+
+Length			in cms 
+
+Weight 			in kilograms 
+
+Sex			man or woman 
+
+Peak_flow 	in liters 
+
+ 
+
+This file will be saved in a Github environment to make it accessible for all group members. The data will be anonymized  
