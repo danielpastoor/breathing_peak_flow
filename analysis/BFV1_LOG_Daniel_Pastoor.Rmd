@@ -185,7 +185,7 @@ ggplot(data = data_breath %>% filter(Sporting == F)) +
        alt = "A histogram plotted from a data collection with the filter if the person does not sport grouped by sex")
 ```
 
-## June 9-6
+## June 12-6
 
 ### optimized box plot:
 # Marian

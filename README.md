@@ -7,7 +7,7 @@ ________________
 
 ## Description
 
-This repository contains the assignment given by the school to create an analysis of a subject of chose.
+This repository contains the assignment given by the school to create an analysis of a subject of choice.
 
 The purpose of this experiment was to determine whether or not sports/working out influences the peak flow rate of students. The peak flow rate is the maximum rate of airflow that a person can exhale and is measured in liters per minute. A healthy peak flow rate lies between 400 and 600 liters per minute. A peak flow rate between 200 and 400 liters per minute can indicate asthma. The peak flow rate is measured using a spirometer. 
 
